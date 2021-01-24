@@ -63,6 +63,7 @@ def bubblesort(arr):
                 temp = float(arr[j-1])
                 arr[j-1] = float(arr[j])
                 arr[j] = temp
+    return arr
 
 def bubblesort2(arr):
     itemCount = len(arr)
@@ -77,6 +78,7 @@ def bubblesort2(arr):
                 arr[j] = float(arr[j+1])
                 arr[j+1] = temp        
                 hasChanged = 1
+    return arr
     
 
 def merge(left, right):
@@ -165,6 +167,7 @@ def quicksort(arr, low, high):
         part = partition(arr, low, high)
         quicksort(arr, low, part)
         quicksort(arr, part+1, high)
+    return arr
 
 def p_quicksort(argv):
     arr = argv.arr
@@ -191,6 +194,8 @@ def p_quicksort(argv):
             
             y.join()
             x.join()
+        
+        return arr
 
 def bucketsort(arr):
     N = len(arr)
@@ -211,7 +216,4 @@ def bucketsort(arr):
             for val in B[j]:
                 arr[i] = val
                 i += 1
-
-'''arr = [5, 4, 3, 4, 2, 1]
-bucketsort(arr)
-print(arr)'''
+    return arr
