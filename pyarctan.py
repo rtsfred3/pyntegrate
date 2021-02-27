@@ -4,11 +4,11 @@ class ThreadWithReturnValue(threading.Thread):
     def __init__(self, group=None, target=None, name=None, args=(), kwargs={}, Verbose=None):
         threading.Thread.__init__(self, group, target, name, args, kwargs)
         self._return = None
-    
+
     def run(self):
         if self._target is not None:
             self._return = self._target(*self._args, **self._kwargs)
-    
+
     def join(self, *args):
         threading.Thread.join(self, *args)
         return self._return
@@ -76,10 +76,10 @@ def bubblesort2(arr):
             if arr[j] > arr[j+1]:
                 temp = float(arr[j])
                 arr[j] = float(arr[j+1])
-                arr[j+1] = temp        
+                arr[j+1] = temp
                 hasChanged = 1
     return arr
-    
+
 
 def merge(left, right):
     if type(left) == arg_struct: left = left.arr
@@ -93,7 +93,7 @@ def merge(left, right):
         else:
             result.append(right[right_idx])
             right_idx += 1
- 
+
     if left_idx < len(left):
         result.extend(left[left_idx:])
     if right_idx < len(right):
@@ -103,11 +103,11 @@ def merge(left, right):
 def mergesort(m):
     if len(m) <= 1:
         return m
- 
+
     middle = len(m) // 2
     left = m[:middle]
     right = m[middle:]
- 
+
     left = mergesort(left)
     right = mergesort(right)
     return list(merge(left, right))
@@ -115,15 +115,15 @@ def mergesort(m):
 def p_mergesort(argv):
     arr = argv.arr
     depth = argv.depth
-    
+
     if len(arr) <= 1:
         return arr
- 
+
     middle = len(arr) // 2
-    
+
     argv_t = arg_struct(arr[:middle], -1, -1, depth+1)
     argv_m = arg_struct(arr[middle:], -1, -1, depth+1)
-    
+
     if depth >= 1:
         left = p_mergesort(argv_t)
         right = p_mergesort(argv_m)
@@ -131,13 +131,13 @@ def p_mergesort(argv):
     else:
         x = ThreadWithReturnValue(target=p_mergesort, args=(argv_t,))
         y = ThreadWithReturnValue(target=p_mergesort, args=(argv_m,))
-        
+
         x.start()
         y.start()
-        
+
         left = x.join()
         right = y.join()
-        
+
         return list(merge(left, right))
 
 def insertionsort(A):
@@ -151,7 +151,7 @@ def insertionsort(A):
 def arr_swap(arr, a, b):
     if a != b:
         arr[a], arr[b] = arr[b], arr[a]
-    
+
 def partition(arr, low, high):
     pivot = arr[low]
     lastSmall = low
@@ -174,13 +174,13 @@ def p_quicksort(argv):
     low = argv.arg1
     high = argv.arg2
     depth = argv.depth
-    
+
     if low < high:
         part = partition(arr, low, high)
-        
+
         argv_t = arg_struct(arr, low, part, depth+1)
         argv_m = arg_struct(arr, part+1, high, depth+1)
-        
+
         if depth >= 1:
             p_quicksort(argv_t)
             p_quicksort(argv_m)
@@ -188,13 +188,13 @@ def p_quicksort(argv):
         else:
             x = threading.Thread(target=p_quicksort, args=(argv_t,))
             y = threading.Thread(target=p_quicksort, args=(argv_m,))
-            
+
             x.start()
             y.start()
-            
+
             y.join()
             x.join()
-        
+
         return arr
 
 def bucketsort(arr):
@@ -202,14 +202,14 @@ def bucketsort(arr):
     bins = 10
     N2 = int((1.0/bins)*N)
     B = [[] for i in range(N2)]
-    
+
     for i in range(N):
         B[int(arr[i]/(bins*N))].append(arr[i])
-    
+
     for i in range(N2):
         if len(B[i]) > 1:
             quicksort(B[i], 0, len(B[i]))
-    
+
     i = 0
     for j in range(N2):
         if len(B[j]) > 0:

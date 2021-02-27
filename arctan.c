@@ -35,6 +35,14 @@ void makeArray(d_type * dbar, d_type n){
     for(i = 0; i < n; i++) { dbar[i] = getD_Type(n); }
 }
 
+int isSorted(d_type *arr, int n){
+    int i;
+    for(i = 1; i < n; i++){
+        if(arr[i-1] > arr[i]){ return 0; }
+    }
+    return 1;
+}
+
 double f(double x){ return 1.0/(1.0 + x*x); }
 double f2(double t){ return pow(t, a - 1) * pow(e, -t); }
 double f22(){ return integrate(f2, 0.0, 1000.0); }
@@ -821,7 +829,7 @@ static PyObject* insert_sort(PyObject *self, PyObject *args){
 
 static PyObject* pass_arr(PyObject *self, PyObject *args){
     PyObject* seq;
-    int i, seqlen;
+    d_type i, seqlen;
     d_type * dbar;
 
     if(!PyArg_ParseTuple(args, "O", &seq)){ return NULL; }
@@ -881,6 +889,28 @@ static PyObject* makeArr(PyObject *self, PyObject *args){
     return Py_BuildValue("O", seq);
 }
 
+static PyObject* checkIsSorted(PyObject *self, PyObject *args){
+    PyObject* seq;
+    d_type prev, i, seqlen = 0;
+
+    if(!PyArg_ParseTuple(args, "O", &seq)){ return NULL; }
+
+    seq = PySequence_Fast(seq, "argument must be iterable");
+    if(!seq){ return NULL; }
+
+    seqlen = PySequence_Fast_GET_SIZE(seq);
+
+    prev = PyLong_AsLong(PyNumber_Long(PySequence_Fast_GET_ITEM(seq, 0)));
+
+    for(i = 1; i < seqlen; i++) {
+        d_type val = PyLong_AsLong(PyNumber_Long(PySequence_Fast_GET_ITEM(seq, i)));
+        if(prev > val){ Py_RETURN_FALSE; }
+        prev = val;
+    }
+
+    Py_RETURN_TRUE;
+}
+
 static PyMethodDef arctan_methods[] = {
     { "arctan", arctan, METH_VARARGS, "Give arctan" },
     { "arctan2", arctan2, METH_VARARGS, "Give arctan" },
@@ -899,6 +929,7 @@ static PyMethodDef arctan_methods[] = {
     { "primes", primes, METH_VARARGS, "Checks if prime" },
     { "p_primes", p_primes, METH_VARARGS, "Checks if prime" },
     { "makeArrMin", makeArr, METH_VARARGS, "Makes an array" },
+    { "isSorted", checkIsSorted, METH_VARARGS, "Checks if array is sorted" },
     { NULL, NULL, 0, NULL }
 };
 
