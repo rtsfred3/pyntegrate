@@ -98,7 +98,7 @@ class TestTimeMethods(unittest.TestCase):
         
         assert timeC < timePY
     
-    def test_p_quicksort(self):
+    '''def test_p_quicksort(self):
         a, b = help.makeArr(self.n)
         
         startC = time.time()
@@ -109,7 +109,7 @@ class TestTimeMethods(unittest.TestCase):
         pyarctan.p_quicksort(pyarctan.arg_struct(b, 0, len(b), 0))
         timePY = time.time() - startPY
         
-        assert timeC < timePY
+        assert timeC < timePY'''
 
     def test_mergesort(self):
         a, b = help.makeArr(self.n)
@@ -124,7 +124,7 @@ class TestTimeMethods(unittest.TestCase):
         
         assert timeC < timePY
 
-    def test_p_mergesort(self):
+    '''def test_p_mergesort(self):
         a, b = help.makeArr(self.n)
         
         startC = time.time()
@@ -135,7 +135,7 @@ class TestTimeMethods(unittest.TestCase):
         pyarctan.p_mergesort(pyarctan.arg_struct(b, 0, len(b), 0))
         timePY = time.time() - startPY
         
-        assert timeC < timePY
+        assert timeC < timePY'''
 
     def test_insertionsort(self):
         a, b = help.makeArr(self.n)
