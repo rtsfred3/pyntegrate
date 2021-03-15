@@ -1,6 +1,6 @@
 import re, sys, time, random
 import arctan, pyarctan
-from help import makeArr, makeArrMin
+from help import *
 
 def compute_prime(n):
     print("Computing Primes Up to %s\n" % ('{:,}'.format(n)))
@@ -870,9 +870,9 @@ def main(argv):
     if pause: n = input('in')
 
 if __name__== "__main__":
-    #main(sys.argv[1:])
+    main(sys.argv[1:])
     
-    n = 750000000
+    '''n = 750000000
     
     a, b = makeArr(n)
     
@@ -882,4 +882,4 @@ if __name__== "__main__":
     
     start = time.time()
     isSorted(b)
-    print(round(time.time() - start, 6), 's')
+    print(round(time.time() - start, 6), 's')'''
