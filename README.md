@@ -20,8 +20,6 @@ To install the package, use `python3 setup.py install`.
 
 ## Installation
 
-`
-git clone https://github.com/rtsfred3/pyntegrate.git
+`git clone https://github.com/rtsfred3/pyntegrate.git`
 
-python3 setup.py install
-`
+`python3 setup.py install`
