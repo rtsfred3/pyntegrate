@@ -1,5 +1,7 @@
 import re, sys, time, random
-import arctan, pyarctan
+# import arctan, pyntegrate.pyarctan
+from pyntegrate import *
+
 from help import *
 
 def compute_prime(n):
@@ -8,7 +10,7 @@ def compute_prime(n):
     a = arctan.primes(n)
     t1 = time.time() - start
     printTime2("Non-Parallel C", t1, "\t ")
-    
+
     start = time.time()
     p = arctan.p_primes(n)
     t3 = time.time() - start
@@ -871,15 +873,15 @@ def main(argv):
 
 if __name__== "__main__":
     main(sys.argv[1:])
-    
+
     '''n = 750000000
-    
+
     a, b = makeArr(n)
-    
+
     start = time.time()
     arctan.isSorted(a)
     print(round(time.time() - start, 6), 's')
-    
+
     start = time.time()
     isSorted(b)
     print(round(time.time() - start, 6), 's')'''

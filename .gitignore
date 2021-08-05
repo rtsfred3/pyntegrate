@@ -3,18 +3,12 @@
 
 *.egg
 
-arctan_rtsfred3.egg-info/dependency_links.txt
-
-arctan_rtsfred3.egg-info/PKG-INFO
-
-arctan_rtsfred3.egg-info/SOURCES.txt
-
-arctan_rtsfred3.egg-info/top_level.txt
-
 *.so
 
 *.o
 
-dist/arctan-rtsfred3-1.2.0.tar.gz
+arctan_rtsfred3.egg-info/
 
-dist/arctan-1.2.0.tar.gz
+dist/
+
+build/

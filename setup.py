@@ -18,7 +18,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="arctan-rtsfred3",
-    version="1.2.0",
+    version="1.3.1",
     author="Ryan Fredrickson",
     author_email="rtsfred3@gmail.com",
     description="This is an arctan package",
@@ -27,10 +27,12 @@ setuptools.setup(
     url="https://github.com/rtsfred3/pyntegrate",
     classifiers=[
         "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: MIT License",
+        "Programming Language :: C",
+        "License :: OSI Approved :: Apache Software License",
         "Operating System :: OS Independent",
     ],
+    scripts=['pyntegrate/pyarctan.py'],
     packages=setuptools.find_packages(),
-    ext_modules=[setuptools.Extension("arctan", ["arctan.c"])],
+    ext_modules=[setuptools.Extension("pyntegrate.arctan", ["pyntegrate/arctan.c"])],
     python_requires=">=3.6",
 )

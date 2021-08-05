@@ -1,5 +1,6 @@
 import re, sys, time, random
-import arctan
+# import arctan
+import pyntegrate.arctan as arctan
 
 class help:
     def __init__(self):
