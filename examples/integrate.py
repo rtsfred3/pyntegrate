@@ -10,24 +10,24 @@ def compute_prime(n):
     a = arctan.primes(n)
     t1 = time.time() - start
     printTime2("Non-Parallel C", t1, "\t ")
-
+    
     start = time.time()
     p = arctan.p_primes(n)
     t3 = time.time() - start
     printTime2("Parallel C", t3, "\t ")
-
+    
     start = time.time()
     b = pyarctan.primes(n)
     t2 = time.time() - start
     printTime2("Non-Parallel Py", t2, " ")
-
+    
     print()
-
+    
     print("({a} == {b}) = {c}".format(a=a, b=b, c=(b==a)))
-
+    
     if t3 > 0: print("Parallel C is %0.3f times faster than Non-Parallel Python" % (t2/t3))
     if t1 > 0: print("Non-Parallel C is %0.3f times faster than Non-Parallel Python" % (t2/t1))
-
+    
     if t3 > 0: print("\nParallel C is %0.3f times faster than Non-Parallel C" % (t1/t3))
 
 def compute_prime_p(n):
@@ -36,16 +36,16 @@ def compute_prime_p(n):
     a = arctan.primes(n)
     t1 = time.time() - start
     printTime2("Non-Parallel C", t1, "\t ")
-
+    
     start = time.time()
     p = arctan.p_primes(n)
     t2 = time.time() - start
     printTime2("Parallel C", t2, "\t ")
-
+    
     print()
-
+    
     print("({a} == {b}) = {c}".format(a=a, b=p, c=(p==a)))
-
+    
     if t2 > 0: print("Parallel C is %0.3f times faster than Non-Parallel C" % (t1/t2))
 
 def compute_arctan(n):
@@ -54,139 +54,139 @@ def compute_arctan(n):
     print(4*arctan.arctan2(1.0, n))
     totalTimeC = round(time.time() - start, 6)
     print("C:", str(totalTimeC) + " seconds")
-
+    
     print()
-
+    
     start = time.time()
     print(4*pyarctan.arctan2(1.0, n))
     totalTimePython = round(time.time() - start, 6)
     print("Python:", str(totalTimePython) + " seconds")
-
+    
     print()
-
+    
     if totalTimeC > 0: printTime(totalTimePython/totalTimeC)
 
 def compute_bubblesort(n):
     printHeading('Bubble Sort', n)
     a, b = makeArr(n)
-
+    
     start = time.time()
     arctan.bubblesort(a)
     totalTimeC = round(time.time() - start, 5)
     printTime2('C', totalTimeC)
-
+    
     a = [int(i) for i in a]
-
+    
     start = time.time()
     pyarctan.bubblesort(b)
     totalTimePython = round(time.time() - start, 5)
     printTime2('Python', totalTimePython)
-
+    
     print()
-
+    
     if totalTimeC > 0: printTime(totalTimePython/totalTimeC)
     #printArr(a, 10)
-
+    
     print('`a` is sorted' if isSorted(a) else '`a` is not sorted')
     print('`b` is sorted' if isSorted(b) else '`b` is not sorted')
 
 def compute_bubblesort2(n):
     printHeading('Bubble Sort 2', n)
     a, b = makeArr(n, 100)
-
+    
     start = time.time()
     arctan.bubblesort2(a)
     totalTimeC = round(time.time() - start, 5)
     printTime2('C', totalTimeC)
-
+    
     a = [int(i) for i in a]
-
+    
     start = time.time()
     pyarctan.bubblesort2(b)
     totalTimePython = round(time.time() - start, 5)
     printTime2('Python', totalTimePython)
-
+    
     print()
-
+    
     if totalTimeC > 0: printTime(totalTimePython/totalTimeC)
     #printArr(a, 10)
-
+    
     print('`a` is sorted' if isSorted(a) else '`a` is not sorted')
     print('`b` is sorted' if isSorted(b) else '`b` is not sorted')
 
 def compute_quicksort(n):
     printHeading('Quick Sort', n)
     a, b = makeArr(n, 100)
-
+    
     start = time.time()
     arctan.quicksort(a)
     totalTimeC = round(time.time() - start, 5)
     printTime2('C', totalTimeC)
-
+    
     a = [int(i) for i in a]
-
+    
     start = time.time()
     pyarctan.quicksort(b, 0, len(b))
     totalTimePython = round(time.time() - start, 5)
     printTime2('Python', totalTimePython)
-
+    
     print()
-
+    
     if totalTimeC > 0: printTime(totalTimePython/totalTimeC)
     #printArr(a, 10)
-
+    
     print('`a` is sorted' if isSorted(a) else '`a` is not sorted')
     print('`b` is sorted' if isSorted(b) else '`b` is not sorted')
 
 def compute_p_quicksort(n):
     printHeading('Parallel Quick Sort', n)
     a, b = makeArr(n, 100)
-
+    
     start = time.time()
     arctan.p_quicksort(a)
     totalTimeC = round(time.time() - start, 5)
     printTime2('C', totalTimeC)
-
+    
     a = [int(i) for i in a]
-
+    
     args = pyarctan.arg_struct(b, 0, len(b), 0)
-
+    
     start = time.time()
     pyarctan.p_quicksort(args)
     totalTimePython = round(time.time() - start, 5)
     printTime2('Python', totalTimePython)
-
+    
     print()
-
+    
     if totalTimeC > 0: printTime(totalTimePython/totalTimeC)
     #printArr(a, 10)
-
+    
     print('`a` is sorted' if isSorted(a) else '`a` is not sorted')
     print('`b` is sorted' if isSorted(b) else '`b` is not sorted')
 
 def compute_p_mergesort(n):
     printHeading('Parallel Merge Sort', n)
     a, b = makeArr(n, 100)
-
+    
     start = time.time()
     arctan.p_mergesort(a)
     totalTimeC = round(time.time() - start, 5)
     printTime2('C', totalTimeC)
-
+    
     a = [int(i) for i in a]
-
+    
     args = pyarctan.arg_struct(b, 0, len(b), 0)
-
+    
     start = time.time()
     b = pyarctan.p_mergesort(args)
     totalTimePython = round(time.time() - start, 5)
     printTime2('Python', totalTimePython)
-
+    
     print()
-
+    
     if totalTimeC > 0: printTime(totalTimePython/totalTimeC)
     #printArr(a, 10)
-
+    
     print('`a` is sorted' if isSorted(a) else '`a` is not sorted')
     print('`b` is sorted' if isSorted(b) else '`b` is not sorted')
 
@@ -194,40 +194,40 @@ def compute_merge_test(n):
     printHeading('Merge Sort Test', n)
     a, b = makeArr(n, 100)
     c, d = makeArr(n, 100)
-
+    
     t = [0, 0, 0, 0] #[ Parallel C, Parallel Py, Non-Parallel C, Non-Parallel Py ]
-
+    
     start = time.time()
     arctan.p_mergesort(a)
     t[0] = round(time.time() - start, 5)
     printTime2('[C]  Parallel', t[0])
-
+    
     a = [int(i) for i in a]
-
+    
     args = pyarctan.arg_struct(b, 0, len(b), 0)
-
+    
     start = time.time()
     b = pyarctan.p_mergesort(args)
     t[1] = round(time.time() - start, 5)
     printTime2('[Py] Parallel', t[1])
-
+    
     start = time.time()
     arctan.mergesort(c)
     t[2] = round(time.time() - start, 5)
     printTime2('[C]\tNon-P', t[2])
-
+    
     c = [int(i) for i in c]
-
+    
     start = time.time()
     d = pyarctan.mergesort(d)
     t[3] = round(time.time() - start, 5)
     printTime2('[Py]\tNon-P', t[3])
-
+    
     print()
-
+    
     print("P Merge Sort is %0.3f times faster than Merge Sort in C" % (t[2]/t[0]))
     print("P Merge Sort is %0.3f times faster than Merge Sort in Py" % (t[3]/t[1]))
-
+    
     print('`a` is sorted' if isSorted(a) else '`a` is not sorted')
     print('`b` is sorted' if isSorted(b) else '`b` is not sorted')
     print('`c` is sorted' if isSorted(c) else '`c` is not sorted')
@@ -237,24 +237,24 @@ def compute_bucketsort(n):
     printHeading('Bucket Sort', n)
     a, b = makeArr(n, 100)
     #a, b = makeArrLin(n), makeArrLin(n)
-
+    
     start = time.time()
     arctan.bucketsort(a)
     totalTimeC = round(time.time() - start, 5)
     printTime2('C', totalTimeC)
-
+    
     a = [int(i) for i in a]
-
+    
     start = time.time()
     pyarctan.bucketsort(b)
     totalTimePython = round(time.time() - start, 5)
     printTime2('Python', totalTimePython)
-
+    
     print()
-
+    
     if totalTimeC > 0: printTime(totalTimePython/totalTimeC)
     #printArr(a, 10)
-
+    
     print('`a` is sorted' if isSorted(a) else '`a` is not sorted')
     print('`b` is sorted' if isSorted(b) else '`b` is not sorted')
 
@@ -262,88 +262,88 @@ def compute_b_v_b2_C(n):
     printHeading('Bubble Sort vs Bubble Sort 2 in C', n)
     #print('Bubble Sort vs Bubble Sort 2 in C: ' + '{:,}'.format(n) + "\n")
     a, b = makeArr(n)
-
+    
     start = time.time()
     arctan.bubblesort(a)
     totalTimeB = round(time.time() - start, 5)
     printTime2('Bubble Sort', totalTimeB)
-
+    
     a = [int(i) for i in a]
-
+    
     start = time.time()
     arctan.bubblesort2(b)
     totalTimeB2 = round(time.time() - start, 5)
     printTime2('Bubble Sort 2', totalTimeB2)
-
+    
     print()
-
+    
     if totalTimeB2 > 0: print('Bubble Sort 2 is', round(totalTimeB/totalTimeB2, 5), 'times faster than Bubble Sort in C')
 
 def compute_b_v_b2_P(n):
     printHeading('Bubble Sort vs Bubble Sort 2 in Py', n)
     a, b = makeArr(n)
-
+    
     start = time.time()
     pyarctan.bubblesort(a)
     totalTimeB = round(time.time() - start, 5)
     printTime2('Bubble Sort', totalTimeB)
-
+    
     a = [int(i) for i in a]
-
+    
     start = time.time()
     pyarctan.bubblesort2(b)
     totalTimeB2 = round(time.time() - start, 5)
     printTime2('Bubble Sort 2', totalTimeB2)
-
+    
     print()
-
+    
     if totalTimeB2 > 0: print('Bubble Sort 2 is', round(totalTimeB/totalTimeB2, 5), 'times faster than Bubble Sort in Python')
 
 def compute_mergesort(n):
     printHeading('Merge Sort', n)
     a, b = makeArr(n)
-
+    
     start = time.time()
     arctan.mergesort(a)
     totalTimeC = round(time.time() - start, 5)
     printTime2('C', totalTimeC)
-
+    
     a = [int(i) for i in a]
-
+    
     start = time.time()
     b = pyarctan.mergesort(b)
     totalTimePython = round(time.time() - start, 5)
     printTime2('Python', totalTimePython)
-
+    
     print()
-
+    
     if totalTimeC > 0: printTime(totalTimePython/totalTimeC)
     #printArr(a, 10)
-
+    
     print('`a` is sorted' if isSorted(a) else '`a` is not sorted')
     print('`b` is sorted' if isSorted(b) else '`b` is not sorted')
 
 def compute_insertsort(n):
     printHeading('Insertion Sort', n)
     a, b = makeArr(n)
-
+    
     start = time.time()
     arctan.insertionsort(a)
     totalTimeC = round(time.time() - start, 5)
     printTime2('C', totalTimeC)
-
+    
     a = [int(i) for i in a]
-
+    
     start = time.time()
     b = pyarctan.insertionsort(b)
     totalTimePython = round(time.time() - start, 5)
     printTime2('Python', totalTimePython)
-
+    
     print()
-
+    
     if totalTimeC > 0: printTime(totalTimePython/totalTimeC)
     #printArr(a, 10)
-
+    
     print('`a` is sorted' if isSorted(a) else '`a` is not sorted')
     print('`b` is sorted' if isSorted(b) else '`b` is not sorted')
 
@@ -873,15 +873,15 @@ def main(argv):
 
 if __name__== "__main__":
     main(sys.argv[1:])
-
+    
     '''n = 750000000
-
+    
     a, b = makeArr(n)
-
+    
     start = time.time()
     arctan.isSorted(a)
     print(round(time.time() - start, 6), 's')
-
+    
     start = time.time()
     isSorted(b)
     print(round(time.time() - start, 6), 's')'''
