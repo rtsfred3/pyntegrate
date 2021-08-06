@@ -7,7 +7,7 @@
 
 *.o
 
-arctan_rtsfred3.egg-info/
+pyntegrate.egg-info/
 
 dist/
 
