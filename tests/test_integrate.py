@@ -1,6 +1,13 @@
 import time, unittest
-import help
-from pyntegrate import *
+
+import pyntegrate.pyarctan as pyarctan
+import pyntegrate.arctan as arctan
+
+def makeArrMin(n, seed=25):
+    return arctan.makeArrMin(n)
+
+def makeArr(n, seed=25):
+    return makeArrMin(n, seed), makeArrMin(n, seed)
 
 class TestArctanMethods(unittest.TestCase):
     def test_bubblesort(self):
@@ -61,7 +68,7 @@ class TestTimeMethods(unittest.TestCase):
         self.n = 100
     
     def test_bubblesort(self):
-        a, b = help.makeArr(self.n)
+        a, b = makeArr(self.n)
         
         startC = time.time()
         arctan.bubblesort(a)
@@ -74,7 +81,7 @@ class TestTimeMethods(unittest.TestCase):
         assert timeC < timePY
     
     def test_bubblesort2(self):
-        a, b = help.makeArr(self.n)
+        a, b = makeArr(self.n)
         
         startC = time.time()
         arctan.bubblesort2(a)
@@ -87,7 +94,7 @@ class TestTimeMethods(unittest.TestCase):
         assert timeC < timePY
     
     def test_quicksort(self):
-        a, b = help.makeArr(self.n)
+        a, b = makeArr(self.n)
         
         startC = time.time()
         arctan.quicksort(a)
@@ -100,7 +107,7 @@ class TestTimeMethods(unittest.TestCase):
         assert timeC < timePY
     
     '''def test_p_quicksort(self):
-        a, b = help.makeArr(self.n)
+        a, b = makeArr(self.n)
         
         startC = time.time()
         arctan.p_quicksort(a)
@@ -113,7 +120,7 @@ class TestTimeMethods(unittest.TestCase):
         assert timeC < timePY'''
 
     def test_mergesort(self):
-        a, b = help.makeArr(self.n)
+        a, b = makeArr(self.n)
         
         startC = time.time()
         arctan.mergesort(a)
@@ -126,7 +133,7 @@ class TestTimeMethods(unittest.TestCase):
         assert timeC < timePY
 
     '''def test_p_mergesort(self):
-        a, b = help.makeArr(self.n)
+        a, b = makeArr(self.n)
         
         startC = time.time()
         arctan.p_mergesort(a)
@@ -139,7 +146,7 @@ class TestTimeMethods(unittest.TestCase):
         assert timeC < timePY'''
 
     def test_insertionsort(self):
-        a, b = help.makeArr(self.n)
+        a, b = makeArr(self.n)
         
         startC = time.time()
         arctan.insertionsort(a)
