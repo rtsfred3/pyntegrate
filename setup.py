@@ -17,7 +17,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="arctan-rtsfred3",
+    name="pyntegrate",
     version="1.3.2",
     author="Ryan Fredrickson",
     author_email="rtsfred3@gmail.com",
