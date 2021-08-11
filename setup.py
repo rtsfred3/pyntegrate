@@ -1,16 +1,3 @@
-'''from distutils.core import setup, Extension
-
-extension_mod = Extension("arctan",
-                          ["arctan.c"])
-
-setup(name="arctan",
-      version='1.3.4',
-      description = 'This is an arctan package',
-      author='Ryan Fredrickson',
-      author_email='rtsfred3@gmail.com',
-      url='https://github.com/rtsfred3/pyntegrate',
-      ext_modules=[extension_mod])'''
-
 import setuptools
 
 with open("README.md", "r", encoding="utf-8") as fh:
@@ -18,15 +5,21 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="pyntegrate",
-    version="1.3.4",
+    version="1.3.4b1",
     author="Ryan Fredrickson",
     author_email="rtsfred3@gmail.com",
-    description="This is an arctan package",
+    description="Pyntegrate is an example of various sorting algorithms using C Extensions.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/rtsfred3/pyntegrate",
+    download_url="https://pypi.org/project/pyntegrate/",
+    project_urls={
+            "Bug Tracker": "https://github.com/rtsfred3/pyntegrate/issues",
+            "Source Code": "https://github.com/rtsfred3/pyntegrate",
+        },
     classifiers=[
         "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: Implementation :: CPython",
         "Programming Language :: C",
         "License :: OSI Approved :: Apache Software License",
         "Operating System :: OS Independent",
