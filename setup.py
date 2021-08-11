@@ -4,7 +4,7 @@ extension_mod = Extension("arctan",
                           ["arctan.c"])
 
 setup(name="arctan",
-      version='1.2.0',
+      version='1.3.3.1',
       description = 'This is an arctan package',
       author='Ryan Fredrickson',
       author_email='rtsfred3@gmail.com',
