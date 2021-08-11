@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="pyntegrate",
-    version="1.3.4b1",
+    version="1.3.5a1",
     author="Ryan Fredrickson",
     author_email="rtsfred3@gmail.com",
     description="Pyntegrate is an example of various sorting algorithms using C Extensions.",
