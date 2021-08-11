@@ -18,7 +18,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="pyntegrate",
-    version="1.3.3",
+    version="1.3.4",
     author="Ryan Fredrickson",
     author_email="rtsfred3@gmail.com",
     description="This is an arctan package",
