@@ -1,4 +1,5 @@
 import threading
+from typing import List
 
 class ThreadWithReturnValue(threading.Thread):
     def __init__(self, group=None, target=None, name=None, args=(), kwargs={}, Verbose=None):
@@ -20,7 +21,7 @@ class arg_struct:
         self.arg2 = arg2
         self.depth = depth
 
-def isPrime(n):
+def isPrime(n) -> bool:
     if (n <= 1) or (n % 2 == 0 and n != 2) or (n % 3 == 0 and n != 3) or (n % 5 == 0 and n != 5) or (n % 7 == 0 and n != 7):
         return False
     for j in range(11, int(n**(1/2))+2, 2):
@@ -28,7 +29,7 @@ def isPrime(n):
             return False
     return True
 
-def primes(n):
+def primes(n: int) -> int:
     prnt = 0
     total = 0
     for i in range(0, n):
@@ -50,13 +51,13 @@ def integrate(f, a, b, n=1000000):
 
     return (s*h)/3.0
 
-def arctan(x):
+def arctan(x) -> float:
     return integrate(lambda x: 1.0/(1.0 + x*x), 0, x)
 
-def arctan2(x, n):
+def arctan2(x, n) -> float:
     return integrate(lambda x: 1.0/(1.0 + x*x), 0, x, n)
 
-def bubblesort(arr):
+def bubblesort(arr) -> List[any]:
     for i in range(0, len(arr)):
         for j in range(1, len(arr)):
             if arr[j-1] > arr[j]:
@@ -65,7 +66,7 @@ def bubblesort(arr):
                 arr[j] = temp
     return arr
 
-def bubblesort2(arr):
+def bubblesort2(arr) -> List[any]:
     itemCount = len(arr)
     hasChanged = 1
     while hasChanged != 0:
@@ -79,7 +80,6 @@ def bubblesort2(arr):
                 arr[j+1] = temp
                 hasChanged = 1
     return arr
-
 
 def merge(left, right):
     if type(left) == arg_struct: left = left.arr
@@ -100,7 +100,7 @@ def merge(left, right):
         result.extend(right[right_idx:])
     return result
 
-def mergesort(m):
+def mergesort(m) -> List[any]:
     if len(m) <= 1:
         return m
 
@@ -112,7 +112,7 @@ def mergesort(m):
     right = mergesort(right)
     return list(merge(left, right))
 
-def p_mergesort(argv):
+def p_mergesort(argv) -> List[any]:
     arr = argv.arr
     depth = argv.depth
 
@@ -140,7 +140,7 @@ def p_mergesort(argv):
 
         return list(merge(left, right))
 
-def insertionsort(A):
+def insertionsort(A) -> List[any]:
     for j in range(1, len(A)):
         i = j
         while i > 0 and A[i-1] > A[i]:
@@ -148,7 +148,7 @@ def insertionsort(A):
             i = i - 1
     return A
 
-def arr_swap(arr, a, b):
+def arr_swap(arr, a, b) -> None:
     if a != b:
         arr[a], arr[b] = arr[b], arr[a]
 
@@ -162,14 +162,14 @@ def partition(arr, low, high):
     arr_swap(arr, low, lastSmall)
     return lastSmall
 
-def quicksort(arr, low, high):
+def quicksort(arr, low, high) -> List[any]:
     if low < high:
         part = partition(arr, low, high)
         quicksort(arr, low, part)
         quicksort(arr, part+1, high)
     return arr
 
-def p_quicksort(argv):
+def p_quicksort(argv) -> List[any]:
     arr = argv.arr
     low = argv.arg1
     high = argv.arg2
@@ -197,7 +197,7 @@ def p_quicksort(argv):
 
         return arr
 
-def bucketsort(arr):
+def bucketsort(arr) -> List[any]:
     N = len(arr)
     bins = 10
     N2 = int((1.0/bins)*N)
