@@ -16,6 +16,7 @@ setuptools.setup(
     download_url=__version__.__download_url__,
     project_urls=__version__.__project_urls__,
     classifiers=__version__.__classifiers__,
+    keywords=__version__.__keywords__,
     scripts=['pyntegrate/pyarctan.py'],
     packages=setuptools.find_packages(),
     ext_modules=[setuptools.Extension("pyntegrate.arctan", ["pyntegrate/arctan.c"])],
