@@ -24,7 +24,7 @@ struct arg_struct {
 
 double integrate(double (*f)(double), double a, double b);
 
-double a = 0.0;
+// double a = 0.0;
 double e = 2.718281828459045235360;
 
 d_type getD_Type(d_type n){ return rand() % (n*n); }
@@ -44,7 +44,7 @@ int isSorted(d_type *arr, int n){
 }
 
 double f(double x){ return 1.0/(1.0 + x*x); }
-double f2(double t){ return pow(t, a - 1) * pow(e, -t); }
+double f2(double t){ return pow(t, 0 - 1) * pow(e, -t); }
 double f22(){ return integrate(f2, 0.0, 1000.0); }
 
 double f3(double x){ return 0.0; }
@@ -365,6 +365,7 @@ static PyObject* arctan2(PyObject *self, PyObject *args){
 }
 
 static PyObject* gamma_fun(PyObject *self, PyObject *args){
+    int a;
     if(!PyArg_ParseTuple(args, "d", &a)){ return NULL; }
 
     return Py_BuildValue("f", f22());
