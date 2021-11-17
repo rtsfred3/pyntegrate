@@ -2,12 +2,12 @@
 
 clear && clear
 
-cd dist/
-
-rm *.whl
-rm *.tar.gz
-
-cd ..
+# cd dist/
+#
+# rm *.whl
+# rm *.tar.gz
+#
+# cd ..
 
 python3 setup.py sdist
 python3 setup.py bdist_wheel
