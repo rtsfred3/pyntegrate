@@ -23,7 +23,21 @@ jobs:
           pip install build
           pip install wheel
       - name: Build package
-        run: ./generate_whl.sh #python setup.py install
+        run: |
+          python3 setup.py sdist
+          python3 setup.py bdist_wheel --plat-name=manylinux1-i686
+          python3 setup.py bdist_wheel --plat-name=manylinux1-x86_64
+          python3 setup.py bdist_wheel --plat-name=manylinux2010-i686
+          python3 setup.py bdist_wheel --plat-name=manylinux2010-x86_64
+          python3 setup.py bdist_wheel --plat-name=manylinux2014-i686
+          python3 setup.py bdist_wheel --plat-name=manylinux2014-x86_64
+          python3 setup.py bdist_wheel --plat-name=manylinux2014-aarch64
+          python3 setup.py bdist_wheel --plat-name=manylinux2014-armv7l
+          python3 setup.py bdist_wheel --plat-name=manylinux2014-ppc64
+          python3 setup.py bdist_wheel --plat-name=manylinux2014-ppc64le
+          python3 setup.py bdist_wheel --plat-name=manylinux2014-s390x
+          python3 setup.py bdist_wheel --plat-name=win32
+          python3 setup.py bdist_wheel --plat-name=win-amd64
         
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
@@ -34,3 +48,4 @@ jobs:
           files: |
             LICENSE.txt
             *.whl
+            *.tar.gz
