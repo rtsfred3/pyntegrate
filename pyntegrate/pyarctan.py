@@ -57,16 +57,16 @@ def arctan(x) -> float:
 def arctan2(x, n) -> float:
     return integrate(lambda x: 1.0/(1.0 + x*x), 0, x, n)
 
-def bubblesort(arr) -> List[any]:
+def bubblesort(arr: List[any]) -> List[any]:
     for i in range(0, len(arr)):
         for j in range(1, len(arr)):
             if arr[j-1] > arr[j]:
-                temp = float(arr[j-1])
-                arr[j-1] = float(arr[j])
+                temp = arr[j-1]
+                arr[j-1] = arr[j]
                 arr[j] = temp
     return arr
 
-def bubblesort2(arr) -> List[any]:
+def bubblesort2(arr: List[any]) -> List[any]:
     itemCount = len(arr)
     hasChanged = 1
     while hasChanged != 0:
@@ -75,8 +75,8 @@ def bubblesort2(arr) -> List[any]:
         itemCount = itemCount - 1
         for j in range(0, itemCount):
             if arr[j] > arr[j+1]:
-                temp = float(arr[j])
-                arr[j] = float(arr[j+1])
+                temp = arr[j]
+                arr[j] = arr[j+1]
                 arr[j+1] = temp
                 hasChanged = 1
     return arr
@@ -140,7 +140,7 @@ def p_mergesort(argv) -> List[any]:
 
         return list(merge(left, right))
 
-def insertionsort(A) -> List[any]:
+def insertionsort(A: List[any]) -> List[any]:
     for j in range(1, len(A)):
         i = j
         while i > 0 and A[i-1] > A[i]:
@@ -148,11 +148,11 @@ def insertionsort(A) -> List[any]:
             i = i - 1
     return A
 
-def arr_swap(arr, a, b) -> None:
+def arr_swap(arr: List[any], a, b) -> None:
     if a != b:
         arr[a], arr[b] = arr[b], arr[a]
 
-def partition(arr, low, high):
+def partition(arr: List[any], low, high):
     pivot = arr[low]
     lastSmall = low
     for i in range(low+1, high):
@@ -162,7 +162,7 @@ def partition(arr, low, high):
     arr_swap(arr, low, lastSmall)
     return lastSmall
 
-def quicksort(arr, low, high) -> List[any]:
+def quicksort(arr: List[any], low, high) -> List[any]:
     if low < high:
         part = partition(arr, low, high)
         quicksort(arr, low, part)
@@ -197,7 +197,7 @@ def p_quicksort(argv) -> List[any]:
 
         return arr
 
-def bucketsort(arr) -> List[any]:
+def bucketsort(arr: List[any]) -> List[any]:
     N = len(arr)
     bins = 10
     N2 = int((1.0/bins)*N)
