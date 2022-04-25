@@ -15,6 +15,8 @@
 
 #define printArr(arr, n) { int ii; int ww = 10; printf("\n"); for(ii = 0; ii<n; ii++){ if((ii+1) % ww == 0 || ii == n-1){ printf("%7.2ld\n", arr[ii]); }else{ printf("%7.2ld ", arr[ii]); } } printf("\n"); }
 
+uint ackermannLookupTable[100][1000];
+
 struct arg_struct {
     d_type *arr;
     int arg1;
@@ -24,7 +26,6 @@ struct arg_struct {
 
 double integrate(double (*f)(double), double a, double b);
 
-// double a = 0.0;
 double e = 2.718281828459045235360;
 
 d_type getD_Type(d_type n){ return rand() % (n*n); }
@@ -71,6 +72,29 @@ double integrate2(double (*f)(double), double a, double b, int n){
     for(i = 2; i < n-1; i+=2){ s = s + 2 * (*f)(a + i*h); }
 
     return (s*h)/3.0;
+}
+
+uint Ackermann(uint m, uint n){
+    if(m == 0ll){ return n + 1; }
+    if(n == 0ll){ return Ackermann(m - 1ll, 1ll); }
+    return Ackermann(m - 1ll, Ackermann(m, n - 1ll));
+}
+
+uint AckermannLookup(uint m, uint n){
+    if(ackermannLookupTable[m][n]){
+        return ackermannLookupTable[m][n];
+    }
+    
+    if(ackermannLookupTable[m][n] == 0){
+        if(m == 0ll){
+            ackermannLookupTable[m][n] = n + 1ll;
+        }else if(n == 0ll){
+            ackermannLookupTable[m][n] = AckermannLookup(m - 1ll, 1ll);
+        }else{
+            ackermannLookupTable[m][n] =  AckermannLookup(m - 1ll, Ackermann(m, n - 1ll));
+        }
+    }
+    return ackermannLookupTable[m][n];
 }
 
 int isPrime(d_type n){
@@ -890,6 +914,22 @@ static PyObject* makeArr(PyObject *self, PyObject *args){
     return Py_BuildValue("O", seq);
 }
 
+static PyObject* runAckermann(PyObject *self, PyObject *args){
+    unsigned long long m, n;
+
+    if(!PyArg_ParseTuple(args, "KK", &m, &n)){ return NULL; }
+    
+    return Py_BuildValue("K", Ackermann(m, n));
+}
+
+static PyObject* runAckermannLookup(PyObject *self, PyObject *args){
+    unsigned long long m, n;
+
+    if(!PyArg_ParseTuple(args, "KK", &m, &n)){ return NULL; }
+    
+    return Py_BuildValue("K", AckermannLookup(m, n));
+}
+
 static PyObject* checkIsSorted(PyObject *self, PyObject *args){
     PyObject* seq;
     d_type prev, i, seqlen = 0;
@@ -931,6 +971,8 @@ static PyMethodDef arctan_methods[] = {
     { "p_primes", p_primes, METH_VARARGS, "Checks if prime" },
     { "makeArrMin", makeArr, METH_VARARGS, "Makes an array" },
     { "isSorted", checkIsSorted, METH_VARARGS, "Checks if array is sorted" },
+    { "Ackermann", runAckermann, METH_VARARGS, "Ackermann Function" },
+    { "AckermannLookup", runAckermannLookup, METH_VARARGS, "Ackermann Function w/ Look Up Table" },
     { NULL, NULL, 0, NULL }
 };
 
