@@ -33,6 +33,16 @@ class TestArctanMethods(unittest.TestCase):
     
     #def test_bucketsort(self):
     #    assert arctan.bucketsort([4, 2, 3, 1]) == [1, 2, 3, 4]
+    
+    def test_ackermann(self):
+        assert arctan.Ackermann(1, 10) == 12
+        assert arctan.Ackermann(3, 10) == 8189
+        assert arctan.Ackermann(4, 1) == 65533
+        
+    def test_ackermannLookup(self):
+        assert arctan.AckermannLookup(1, 10) == 12
+        assert arctan.AckermannLookup(3, 10) == 8189
+        assert arctan.AckermannLookup(4, 1) == 65533
 
 class TestPyarctanMethods(unittest.TestCase):
     def setUp(self):

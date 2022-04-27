@@ -872,7 +872,37 @@ def main(argv):
     if pause: n = input('in')
 
 if __name__== "__main__":
-    main(sys.argv[1:])
+    # main(sys.argv[1:])
+    
+    in1 = int(sys.argv[1])
+    in2 = int(sys.argv[2])
+    
+    # for m in range(1, in1+1):
+    #     for n in range(1, in2+1):
+    #         start = time.time()
+    #         ack = arctan.Ackermann(m, n)
+    #         totalTimeReg = time.time() - start
+    #         print("Ackermann(%s, %s):\t%d\t| Finished in %f seconds" % (m, n, ack, totalTimeReg))
+    #         start = time.time()
+    #         ack = arctan.AckermannLookup(m, n)
+    #         totalTimeLookup = time.time() - start
+    #         print("AckermannLookup(%s, %s):\t%d\t| Finished in %f seconds" % (m, n, ack, totalTimeLookup))
+    #
+    #         print("Ackermann() took %f seconds longer than AckermannLookup()" % (totalTimeReg-totalTimeLookup))
+    #
+    #         print()
+    
+    m, n = in1, in2
+    start = time.time()
+    ack = arctan.Ackermann(m, n)
+    totalTimeReg = time.time() - start
+    print("Ackermann(%s, %s):\t%d\t| Finished in %f seconds" % (m, n, ack, totalTimeReg))
+    start = time.time()
+    ack = arctan.AckermannLookup(m, n)
+    totalTimeLookup = time.time() - start
+    print("AckermannLookup(%s, %s):\t%d\t| Finished in %f seconds" % (m, n, ack, totalTimeLookup))
+
+    print("Ackermann() took %f seconds longer than AckermannLookup()" % (totalTimeReg-totalTimeLookup))
     
     '''n = 750000000
     
