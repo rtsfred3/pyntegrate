@@ -1,14 +1,14 @@
 ---
-name: "pre-release"
+name: "release"
 
 on:
   push:
     branches:
-      - "master"
+      - "pypi"
 
 jobs:
   pre-release:
-    name: "Pre Release"
+    name: "Release"
     runs-on: "ubuntu-latest"
     
     strategy:
@@ -34,9 +34,9 @@ jobs:
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "latest_dev"
-          prerelease: true
-          title: "Latest Dev Build"
+          automatic_release_tag: "latest_release"
+          prerelease: false
+          title: "Latest Release Build"
           files: |
             dist/*.whl
             dist/*.tar.gz
