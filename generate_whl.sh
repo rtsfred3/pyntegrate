@@ -9,7 +9,14 @@ clear && clear
 
 python3 --version
 
-# python3 setup.py sdist
+ver=`python3 --version`
+regex="Python 3\.7\.[0-9]+"
+
+if [[ $ver =~ $regex ]]
+then
+    python3 setup.py sdist
+fi
+
 # python3 setup.py bdist_wheel
 python3 setup.py bdist_wheel --plat-name=manylinux1-i686
 python3 setup.py bdist_wheel --plat-name=manylinux1-x86_64
