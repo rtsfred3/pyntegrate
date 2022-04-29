@@ -15,6 +15,11 @@ then
     python3 setup.py sdist
 fi
 
+if [[ $1 = "--release" ]]
+then
+    python3 setup.py sdist
+fi
+
 # python3 setup.py bdist_wheel
 python3 setup.py bdist_wheel --plat-name=manylinux1-i686
 python3 setup.py bdist_wheel --plat-name=manylinux1-x86_64
