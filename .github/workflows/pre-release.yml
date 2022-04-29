@@ -34,7 +34,7 @@ jobs:
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "latest_dev_" + ${{ matrix.python-version }}
+          automatic_release_tag: "latest_dev_${{ matrix.python-version }}"
           prerelease: true
           title: "Latest Dev Build"
           files: |
