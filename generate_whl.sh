@@ -7,8 +7,6 @@ clear && clear
 # rm *.tar.gz
 # cd ..
 
-python3 --version
-
 ver=`python3 --version`
 regex="Python 3\.7\.[0-9]+"
 

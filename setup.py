@@ -20,5 +20,5 @@ setuptools.setup(
     scripts=['pyntegrate/pyarctan.py'],
     packages=setuptools.find_packages(),
     ext_modules=[setuptools.Extension("pyntegrate.arctan", ["pyntegrate/arctan.c"])],
-    python_requires=">=3.6",
+    python_requires=">=3.7",
 )
