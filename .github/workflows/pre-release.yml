@@ -30,14 +30,12 @@ jobs:
       - name: Build package
         run: |
           ./generate_whl.sh --release
-          VERSION=$(python setup.py --version)
-        
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "latest_dev_v$VERSION_${{ matrix.python-version }}"
+          automatic_release_tag: "latest_dev_${{ matrix.python-version }}"
           prerelease: true
-          title: "Latest Dev Build v$VERSION Python ${{ matrix.python-version }}"
+          title: "Latest Dev Build (Python ${{ matrix.python-version }})"
           files: |
             dist/*.whl
             dist/*.tar.gz

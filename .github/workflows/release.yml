@@ -29,14 +29,13 @@ jobs:
           pip install wheel
       - name: Build package
         run: |
-          ./generate_whl.sh
-        
+          ./generate_whl.sh --release
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "latest_release"
+          automatic_release_tag: "latest_release_${{ matrix.python-version }}"
           prerelease: false
-          title: "Latest Release Build"
+          title: "Latest Release Build (Python ${{ matrix.python-version }})"
           files: |
             dist/*.whl
             dist/*.tar.gz
