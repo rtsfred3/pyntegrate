@@ -45,9 +45,10 @@ jobs:
         
         steps:
             - name: Downloading Artifacts
-              uses: actions/download-artifact@v2
+              uses: actions/download-artifact@v3
               with:
                   name: whl-artifacts
+                  path: dist/
             - uses: "marvinpinto/action-automatic-releases@latest"
               with:
                   repo_token: "${{ secrets.GITHUB_TOKEN }}"
