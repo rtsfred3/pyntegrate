@@ -1,0 +1,67 @@
+---
+name: "test-release"
+
+on:
+    push:
+        branches:
+            - "master"
+
+jobs:
+    generate-test-release:
+        name: "Generating Test Release"
+        runs-on: "ubuntu-latest"
+    
+        strategy:
+            matrix:
+                python-version: [ '3.7', '3.8' ]
+    
+        steps:
+            - uses: actions/checkout@v2
+            - name: Set up Python
+              uses: actions/setup-python@v2
+              with:
+                  python-version: ${{ matrix.python-version }}
+            - name: Get Version Number
+              id: version
+              run: echo "::set-output name=version::$(python3 setup.py --version)"
+            - name: Install dependencies
+              run: |
+                python -m pip install --upgrade pip
+                pip install build
+                pip install wheel
+            - name: Build package
+              run: ./generate_whl.sh
+            - name: Uploading Artifacts
+              uses: actions/upload-artifact@v3
+              with:
+                  name: whl-artifacts
+                  path: |
+                        dist/*.whl
+                        dist/*.tar.gz
+    test-release:
+        name: "Test Release"
+        runs-on: "ubuntu-latest"
+        
+        steps:
+            - name: Downloading Artifacts
+              uses: actions/download-artifact@v2
+              with:
+                  name: whl-artifacts
+            - uses: "marvinpinto/action-automatic-releases@latest"
+              with:
+                  repo_token: "${{ secrets.GITHUB_TOKEN }}"
+                  automatic_release_tag: "dev_2_latest"
+                  prerelease: true
+                  title: "Latest Dev 2 Build"
+                  files: |
+                        dist/*.whl
+                        dist/*.tar.gz
+            - uses: "marvinpinto/action-automatic-releases@latest"
+              with:
+                  repo_token: "${{ secrets.GITHUB_TOKEN }}"
+                  automatic_release_tag: "dev_2_v${{ steps.version.outputs.version }}"
+                  prerelease: true
+                  title: "Dev 2 Build v${{ steps.version.outputs.version }}"
+                  files: |
+                        dist/*.whl
+                        dist/*.tar.gz
