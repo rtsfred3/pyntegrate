@@ -13,7 +13,7 @@ jobs:
     
     strategy:
       matrix:
-        python-version: [ '3.7', '3.8', '3.9', '3.10' ]
+        python-version: [ '3.7' ]
 
     steps:
       - uses: actions/checkout@v2
@@ -22,20 +22,31 @@ jobs:
         with:
           ref: 'pypi'
           python-version: ${{ matrix.python-version }}
+      - name: Get Version Number
+        id: version
+        run: echo "::set-output name=version::$(python3 setup.py --version)"
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install build
           pip install wheel
       - name: Build package
-        run: |
-          ./generate_whl.sh --release
+        run: python3 setup.py sdist
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "latest_release_${{ matrix.python-version }}"
+          automatic_release_tag: "latest_release"
           prerelease: false
-          title: "Latest Release Build (Python ${{ matrix.python-version }})"
+          title: "Latest Release Build"
+          files: |
+            dist/*.whl
+            dist/*.tar.gz
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "release_v${{ steps.version.outputs.version }}"
+          prerelease: false
+          title: "Release Build v${{ steps.version.outputs.version }}"
           files: |
             dist/*.whl
             dist/*.tar.gz
