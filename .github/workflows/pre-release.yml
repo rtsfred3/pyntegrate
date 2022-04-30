@@ -35,7 +35,7 @@ jobs:
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "latest_dev"
+          automatic_release_tag: "dev_latest"
           prerelease: true
           title: "Latest Dev Build"
           files: |
@@ -44,9 +44,9 @@ jobs:
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "release_v${{ steps.version.outputs.version }}"
-          prerelease: false
-          title: "Release Build v${{ steps.version.outputs.version }}"
+          automatic_release_tag: "dev_v${{ steps.version.outputs.version }}"
+          prerelease: true
+          title: "Dev Build v${{ steps.version.outputs.version }}"
           files: |
             dist/*.whl
             dist/*.tar.gz
