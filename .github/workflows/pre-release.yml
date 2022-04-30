@@ -53,14 +53,6 @@ jobs:
             - name: Get Version Number
               id: version
               run: echo "::set-output name=version::$(python3 setup.py --version)"
-            - name: Install dependencies
-              run: |
-                python -m pip install --upgrade pip
-                pip install build
-                pip install wheel
-            - name: Get Version Number
-              id: version
-              run: echo "::set-output name=version::$(python3 setup.py --version)"
             - name: Downloading Artifacts
               uses: actions/download-artifact@v3
               with:
