@@ -34,7 +34,7 @@ jobs:
             - name: Uploading Artifacts
               uses: actions/upload-artifact@v3
               with:
-                  name: whl-artifacts
+                  name: test-whl-artifacts
                   path: |
                         dist/*.whl
                         dist/*.tar.gz
@@ -51,7 +51,7 @@ jobs:
             - name: Downloading Artifacts
               uses: actions/download-artifact@v3
               with:
-                  name: whl-artifacts
+                  name: test-whl-artifacts
                   path: dist/
             - uses: "marvinpinto/action-automatic-releases@latest"
               with:
