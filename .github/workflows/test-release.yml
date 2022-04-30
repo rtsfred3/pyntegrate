@@ -41,6 +41,7 @@ jobs:
     test-release:
         name: "Test Release"
         runs-on: "ubuntu-latest"
+        needs: generate-test-release
         
         steps:
             - name: Downloading Artifacts
