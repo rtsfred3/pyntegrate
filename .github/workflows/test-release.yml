@@ -60,15 +60,6 @@ jobs:
             - uses: "marvinpinto/action-automatic-releases@latest"
               with:
                   repo_token: "${{ secrets.GITHUB_TOKEN }}"
-                  automatic_release_tag: "dev_2_latest"
-                  prerelease: true
-                  title: "Latest Dev 2 Build"
-                  files: |
-                        dist/*.whl
-                        dist/*.tar.gz
-            - uses: "marvinpinto/action-automatic-releases@latest"
-              with:
-                  repo_token: "${{ secrets.GITHUB_TOKEN }}"
                   automatic_release_tag: "dev_2_v${{ steps.version.outputs.version }}"
                   prerelease: true
                   title: "Dev 2 Build v${{ steps.version.outputs.version }}"
