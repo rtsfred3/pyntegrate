@@ -8,12 +8,14 @@
 
 #include <Python.h>
 
-#define d_type long
-#define uint unsigned long long
+// #define d_type long
+// #define uint unsigned long long
 
-#define arr_swap(arr, a, b) { d_type temp = arr[a]; arr[a] = arr[b]; arr[b] = temp; }
+// #define arr_swap(arr, a, b) { d_type temp = arr[a]; arr[a] = arr[b]; arr[b] = temp; }
 
-#define printArr(arr, n) { int ii; int ww = 10; printf("\n"); for(ii = 0; ii<n; ii++){ if((ii+1) % ww == 0 || ii == n-1){ printf("%7.2ld\n", arr[ii]); }else{ printf("%7.2ld ", arr[ii]); } } printf("\n"); }
+// #define printArr(arr, n) { int ii; int ww = 10; printf("\n"); for(ii = 0; ii<n; ii++){ if((ii+1) % ww == 0 || ii == n-1){ printf("%7.2ld\n", arr[ii]); }else{ printf("%7.2ld ", arr[ii]); } } printf("\n"); }
+
+#include "definitions.h"
 
 uint ackermannLookupTable[100][1000];
 
@@ -30,9 +32,10 @@ double e = 2.718281828459045235360;
 
 d_type getD_Type(d_type n){ return rand() % (n*n); }
 
-void makeArray(d_type * dbar, d_type n){
+void makeArray(d_type * dbar, d_type n, d_type seed){
     int i;
-    srand(2);
+    // srand(2);
+    srand(seed);
     for(i = 0; i < n; i++) { dbar[i] = getD_Type(n); }
 }
 
@@ -899,18 +902,37 @@ static PyObject* pass_arr(PyObject *self, PyObject *args){
 
 static PyObject* makeArr(PyObject *self, PyObject *args){
     d_type i, seqlen;
-
-    if(!PyArg_ParseTuple(args, "l", &seqlen)){ return NULL; }
+    d_type seed = 2;
+    
+    if(!PyArg_ParseTuple(args, "l|l", &seqlen, &seed)){ return NULL; }
+    
+    // if(!PyArg_ParseTuple(args, "ll", &seqlen, &seed)){ return NULL; }
+    // if(!PyArg_ParseTuple(args, "l", &seqlen)){ return NULL; }
+    
+    if(seqlen < 0){ return Py_BuildValue("O", PyList_New(0)); }
 
     PyObject * seq = PyList_New(seqlen);
 
     d_type * dbar = malloc(seqlen*sizeof(d_type));
-    makeArray(dbar, seqlen);
+    makeArray(dbar, seqlen, 2);
 
     for(i = 0; i < seqlen; i++){ PyList_SetItem(seq, i, PyLong_FromLong(dbar[i])); }
 
     free(dbar);
 
+    return Py_BuildValue("O", seq);
+}
+
+static PyObject* makeArrSequential(PyObject *self, PyObject *args){
+    d_type i, seqlen;
+
+    if(!PyArg_ParseTuple(args, "l", &seqlen)){ return NULL; }
+    if(seqlen < 0){ return Py_BuildValue("O", PyList_New(0)); }
+
+    PyObject * seq = PyList_New(seqlen);
+
+    for(i = 0; i < seqlen; i++){ PyList_SetItem(seq, i, PyLong_FromLong(i)); }
+    
     return Py_BuildValue("O", seq);
 }
 
@@ -969,7 +991,9 @@ static PyMethodDef arctan_methods[] = {
     { "isPrime", is_prime, METH_VARARGS, "Checks if prime" },
     { "primes", primes, METH_VARARGS, "Checks if prime" },
     { "p_primes", p_primes, METH_VARARGS, "Checks if prime" },
-    { "makeArrMin", makeArr, METH_VARARGS, "Makes an array" },
+    { "makeArrMin", makeArr, METH_VARARGS, "Makes an array of random values" },
+    { "makeArrMinRandom", makeArr, METH_VARARGS, "Makes an array of random values" },
+    { "makeArrSequential", makeArrSequential, METH_VARARGS, "Makes an array of random values" },
     { "isSorted", checkIsSorted, METH_VARARGS, "Checks if array is sorted" },
     { "Ackermann", runAckermann, METH_VARARGS, "Ackermann Function" },
     { "AckermannLookup", runAckermannLookup, METH_VARARGS, "Ackermann Function w/ Look Up Table" },

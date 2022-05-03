@@ -3,10 +3,10 @@ import time, unittest
 import pyntegrate.pyarctan as pyarctan
 import pyntegrate.arctan as arctan
 
-def makeArrMin(n, seed=25):
-    return arctan.makeArrMin(n)
+def makeArrMin(n, seed=2):
+    return arctan.makeArrMin(n, seed)
 
-def makeArr(n, seed=25):
+def makeArr(n, seed=2):
     return makeArrMin(n, seed), makeArrMin(n, seed)
 
 class TestArctanMethods(unittest.TestCase):
@@ -43,6 +43,10 @@ class TestArctanMethods(unittest.TestCase):
         assert arctan.AckermannLookup(1, 10) == 12
         assert arctan.AckermannLookup(3, 10) == 8189
         assert arctan.AckermannLookup(4, 1) == 65533
+    
+    def test_makeArrSequential(self):
+        assert arctan.makeArrSequential(10) == [i for i in range(10)]
+        assert arctan.makeArrSequential(-1) == []
 
 class TestPyarctanMethods(unittest.TestCase):
     def setUp(self):
@@ -78,7 +82,7 @@ class TestTimeMethods(unittest.TestCase):
         self.n = 100
     
     def test_bubblesort(self):
-        a, b = makeArr(self.n)
+        a, b = makeArr(self.n, 2)
         
         startC = time.time()
         arctan.bubblesort(a)
@@ -164,6 +168,19 @@ class TestTimeMethods(unittest.TestCase):
         
         startPY = time.time()
         pyarctan.insertionsort(b)
+        timePY = time.time() - startPY
+        
+        assert timeC < timePY
+    
+    def test_makeArrSequential(self):
+        val = 1000000
+        
+        startC = time.time()
+        a = arctan.makeArrSequential(val)
+        timeC = time.time() - startC
+        
+        startPY = time.time()
+        b = [i for i in range(val)]
         timePY = time.time() - startPY
         
         assert timeC < timePY
