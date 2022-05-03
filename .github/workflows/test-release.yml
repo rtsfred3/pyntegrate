@@ -2,9 +2,8 @@
 name: "test-release"
 
 on:
-    push:
-        branches:
-            - "master"
+    schedule:
+        - cron: '0 */12 * * *'
 
 jobs:
     generate-test-release:
@@ -58,15 +57,6 @@ jobs:
               with:
                   name: test-whl-artifacts
                   path: dist/
-            - uses: "marvinpinto/action-automatic-releases@latest"
-              with:
-                  repo_token: "${{ secrets.GITHUB_TOKEN }}"
-                  automatic_release_tag: "dev_2_latest"
-                  prerelease: true
-                  title: "Latest Dev 2 Build"
-                  files: |
-                        dist/*.whl
-                        dist/*.tar.gz
             - uses: "marvinpinto/action-automatic-releases@latest"
               with:
                   repo_token: "${{ secrets.GITHUB_TOKEN }}"

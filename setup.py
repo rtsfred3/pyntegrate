@@ -21,5 +21,4 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     ext_modules=[setuptools.Extension("pyntegrate.arctan", ["pyntegrate/arctan.c"])],
     python_requires=">=3.7",
-    options={'bdist_wheel':{'universal':True}},
 )
