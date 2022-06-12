@@ -1,5 +1,5 @@
 import setuptools
-from pyntegrate import __version__ as __version__
+import pyntegrate.__version__ as __version__
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()

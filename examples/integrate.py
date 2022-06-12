@@ -1,34 +1,43 @@
 import re, sys, time, random
 # import arctan, pyntegrate.pyarctan
 from pyntegrate import *
+import pyntegrate.pyarctan as pyarctan
 
 from help import *
 
-def compute_prime(n):
+def compute_prime(n, parallel=False):
     print("Computing Primes Up to %s\n" % ('{:,}'.format(n)))
+    
     start = time.time()
     a = arctan.primes(n)
     t1 = time.time() - start
-    printTime2("Non-Parallel C", t1, "\t ")
+    if parallel:
+        printTime2("Non-Parallel C", t1, "\t ")
+    else:
+        printTime2("Primes in C", t1, "\t ")
     
-    start = time.time()
-    p = arctan.p_primes(n)
-    t3 = time.time() - start
-    printTime2("Parallel C", t3, "\t ")
+    if parallel:
+        start = time.time()
+        p = arctan.p_primes(n)
+        t3 = time.time() - start
+        printTime2("Parallel Primes in C", t3, "\t ")
     
     start = time.time()
     b = pyarctan.primes(n)
     t2 = time.time() - start
-    printTime2("Non-Parallel Py", t2, " ")
+    if parallel:
+        printTime2("Non-Parallel Py", t2, " ")
+    else:
+        printTime2("Primes in Py", t2, "\t ")
     
     print()
     
     print("({a} == {b}) = {c}".format(a=a, b=b, c=(b==a)))
     
-    if t3 > 0: print("Parallel C is %0.3f times faster than Non-Parallel Python" % (t2/t3))
+    if parallel and t3 > 0: print("Parallel C is %0.3f times faster than Non-Parallel Python" % (t2/t3))
     if t1 > 0: print("Non-Parallel C is %0.3f times faster than Non-Parallel Python" % (t2/t1))
     
-    if t3 > 0: print("\nParallel C is %0.3f times faster than Non-Parallel C" % (t1/t3))
+    if parallel and t3 > 0: print("\nParallel C is %0.3f times faster than Non-Parallel C" % (t1/t3))
 
 def compute_prime_p(n):
     print("Computing Primes Up to %s\n" % ('{:,}'.format(n)))
@@ -872,10 +881,11 @@ def main(argv):
     if pause: n = input('in')
 
 if __name__== "__main__":
-    # main(sys.argv[1:])
+    print(version())
+    main(sys.argv[1:])
     
-    in1 = int(sys.argv[1])
-    in2 = int(sys.argv[2])
+    # in1 = int(sys.argv[1])
+    # in2 = int(sys.argv[2])
     
     # for m in range(1, in1+1):
     #     for n in range(1, in2+1):
@@ -892,26 +902,26 @@ if __name__== "__main__":
     #
     #         print()
     
-    m, n = in1, in2
-    start = time.time()
-    ack = arctan.Ackermann(m, n)
-    totalTimeReg = time.time() - start
-    print("Ackermann(%s, %s):\t%d\t| Finished in %f seconds" % (m, n, ack, totalTimeReg))
-    start = time.time()
-    ack = arctan.AckermannLookup(m, n)
-    totalTimeLookup = time.time() - start
-    print("AckermannLookup(%s, %s):\t%d\t| Finished in %f seconds" % (m, n, ack, totalTimeLookup))
-
-    print("Ackermann() took %f seconds longer than AckermannLookup()" % (totalTimeReg-totalTimeLookup))
-    
-    '''n = 750000000
-    
-    a, b = makeArr(n)
-    
-    start = time.time()
-    arctan.isSorted(a)
-    print(round(time.time() - start, 6), 's')
-    
-    start = time.time()
-    isSorted(b)
-    print(round(time.time() - start, 6), 's')'''
+    # m, n = in1, in2
+    # start = time.time()
+    # ack = arctan.Ackermann(m, n)
+    # totalTimeReg = time.time() - start
+    # print("Ackermann(%s, %s):\t%d\t| Finished in %f seconds" % (m, n, ack, totalTimeReg))
+    # start = time.time()
+    # ack = arctan.AckermannLookup(m, n)
+    # totalTimeLookup = time.time() - start
+    # print("AckermannLookup(%s, %s):\t%d\t| Finished in %f seconds" % (m, n, ack, totalTimeLookup))
+    #
+    # print("Ackermann() took %f seconds longer than AckermannLookup()" % (totalTimeReg-totalTimeLookup))
+    #
+    # '''n = 750000000
+    #
+    # a, b = makeArr(n)
+    #
+    # start = time.time()
+    # arctan.isSorted(a)
+    # print(round(time.time() - start, 6), 's')
+    #
+    # start = time.time()
+    # isSorted(b)
+    # print(round(time.time() - start, 6), 's')'''

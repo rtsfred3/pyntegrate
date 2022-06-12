@@ -936,6 +936,19 @@ static PyObject* makeArrSequential(PyObject *self, PyObject *args){
     return Py_BuildValue("O", seq);
 }
 
+static PyObject* makeArrZeros(PyObject *self, PyObject *args){
+    d_type i, seqlen;
+
+    if(!PyArg_ParseTuple(args, "l", &seqlen)){ return NULL; }
+    if(seqlen < 0){ return Py_BuildValue("O", PyList_New(0)); }
+
+    PyObject * seq = PyList_New(seqlen);
+
+    for(i = 0; i < seqlen; i++){ PyList_SetItem(seq, i, PyLong_FromLong(0)); }
+    
+    return Py_BuildValue("O", seq);
+}
+
 static PyObject* runAckermann(PyObject *self, PyObject *args){
     unsigned long long m, n;
 
@@ -993,7 +1006,8 @@ static PyMethodDef arctan_methods[] = {
     { "p_primes", p_primes, METH_VARARGS, "Checks if prime" },
     { "makeArrMin", makeArr, METH_VARARGS, "Makes an array of random values" },
     { "makeArrMinRandom", makeArr, METH_VARARGS, "Makes an array of random values" },
-    { "makeArrSequential", makeArrSequential, METH_VARARGS, "Makes an array of random values" },
+    { "makeArrSequential", makeArrSequential, METH_VARARGS, "Makes an array of sequential values" },
+    { "makeArrZeros", makeArrZeros, METH_VARARGS, "Makes an array of zeros" },
     { "isSorted", checkIsSorted, METH_VARARGS, "Checks if array is sorted" },
     { "Ackermann", runAckermann, METH_VARARGS, "Ackermann Function" },
     { "AckermannLookup", runAckermannLookup, METH_VARARGS, "Ackermann Function w/ Look Up Table" },
