@@ -39,3 +39,7 @@ python3 setup.py bdist_wheel --plat-name=manylinux2014-s390x
 # python3 setup.py bdist_wheel --plat-name=win-amd64
 
 python3 setup.py bdist_wheel --plat-name=macosx_10_11_x86_64
+python3 setup.py bdist_wheel --plat-name=macosx_10_12_x86_64
+python3 setup.py bdist_wheel --plat-name=macosx_10_13_x86_64
+python3 setup.py bdist_wheel --plat-name=macosx_10_14_x86_64
+python3 setup.py bdist_wheel --plat-name=macosx_10_15_x86_64
