@@ -28,4 +28,4 @@ jobs:
                     pip install -r requirements.txt
                     python3 setup.py install
             - name: Run tests with pytest
-              run: pytest
+              run: cd tests/ && python3 -m unittest test_integrate.py
