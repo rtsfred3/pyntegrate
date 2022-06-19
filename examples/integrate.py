@@ -881,8 +881,14 @@ def main(argv):
     if pause: n = input('in')
 
 if __name__== "__main__":
-    print(version())
-    main(sys.argv[1:])
+    # print(version())
+    # main(sys.argv[1:])
+    
+    # print(arctan.Chudnovsky(2))
+    # print(arctan.Chudnovsky(3))
+    
+    print(3.1415926535897932384626433832795028841971693993751058209749445923)
+    print(arctan.pi())
     
     # in1 = int(sys.argv[1])
     # in2 = int(sys.argv[2])

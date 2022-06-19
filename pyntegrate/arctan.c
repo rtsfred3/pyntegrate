@@ -370,6 +370,23 @@ void bucketsort(d_type *arr, int n){
     // if(v[0] && 0 == 1){ printf("Total Memory Footprint: %lu\n", ((n+1)*n2*sizeof(d_type))); }
 }
 
+float chudnovsky(uint n){
+    float q;
+    float summation = 0.0;
+    
+    for(q = 0.0; q < n; q++){
+        float a = chudnovsky_M(q);
+        float b = chudnovsky_L(q);
+        float c = chudnovsky_X(q);
+        summation += (double)(a * b)/(c);
+    }
+    
+    // printf("%f\n", (double)(426880.0*sqrt(10005)));
+    // printf("%f\n", summation);
+    
+    return (426880.0*sqrt(10005))/summation;
+}
+
 static PyObject* arctan(PyObject *self, PyObject *args){
     double x;
 
@@ -447,7 +464,7 @@ static PyObject* p_primes(PyObject *self, PyObject *args){
 }
 
 static PyObject* pi(PyObject *self, PyObject *args){
-    return Py_BuildValue("f", 4*integrate2(f, 0, 1, 500000000));
+    return Py_BuildValue("f", 4*integrate2(f, 0, 1, 100000000));
 }
 
 static PyObject* bubblesort(PyObject *self, PyObject *args){
@@ -949,6 +966,14 @@ static PyObject* makeArrZeros(PyObject *self, PyObject *args){
     return Py_BuildValue("O", seq);
 }
 
+static PyObject* runChudnovsky(PyObject *self, PyObject *args){
+    double n;
+
+    if(!PyArg_ParseTuple(args, "d", &n)){ return NULL; }
+    
+    return Py_BuildValue("d", chudnovsky(n));
+}
+
 static PyObject* runAckermann(PyObject *self, PyObject *args){
     unsigned long long m, n;
 
@@ -1011,6 +1036,7 @@ static PyMethodDef arctan_methods[] = {
     { "isSorted", checkIsSorted, METH_VARARGS, "Checks if array is sorted" },
     { "Ackermann", runAckermann, METH_VARARGS, "Ackermann Function" },
     { "AckermannLookup", runAckermannLookup, METH_VARARGS, "Ackermann Function w/ Look Up Table" },
+    { "Chudnovsky", runChudnovsky, METH_VARARGS, "Chudnovsky Algorithm" },
     { NULL, NULL, 0, NULL }
 };
 
