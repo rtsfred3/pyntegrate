@@ -3,7 +3,10 @@ name: "test-release"
 
 on:
     schedule:
-        - cron: '0 */5 * * *'
+        - cron: '30 0 * * *'
+    push:
+        branches:
+            - "master"
 
 jobs:
     generate-test-release:
