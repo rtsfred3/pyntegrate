@@ -45,7 +45,7 @@ jobs:
     
     test-test-release:
         name: "Testing Wheel Files for GitHub Test-Release"
-        needs: generate-pre-release
+        needs: generate-test-release
     
         strategy:
             matrix:
