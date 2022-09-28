@@ -10,11 +10,6 @@ def makeArrMin(n, seed=2):
 def makeArr(n, seed=2):
     return makeArrMin(n, seed), makeArrMin(n, seed)
 
-class TestVersion(unittest.TestCase):
-    def test_version(self):
-        # assert pyntegrate.version() == '1.3.6.dev12'
-        assert 1 == 1
-
 class TestArctanMethods(unittest.TestCase):
     def test_bubblesort(self):
         assert arctan.bubblesort([4, 2, 3, 1]) == [1, 2, 3, 4]
