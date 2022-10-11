@@ -83,9 +83,9 @@ jobs:
             - uses: "marvinpinto/action-automatic-releases@latest"
               with:
                   repo_token: "${{ secrets.GITHUB_TOKEN }}"
-                  automatic_release_tag: "dev_2_v${{ steps.version.outputs.version }}"
+                  automatic_release_tag: "test_v${{ steps.version.outputs.version }}"
                   prerelease: true
-                  title: "Dev 2 Build v${{ steps.version.outputs.version }}"
+                  title: "Test Build v${{ steps.version.outputs.version }}"
                   files: |
                         dist/*.whl
                         dist/*.tar.gz
