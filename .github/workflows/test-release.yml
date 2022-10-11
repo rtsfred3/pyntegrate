@@ -2,17 +2,20 @@
 name: "test-release"
 
 on:
-    schedule:
-        - cron: '0 */12 * * *'
+    push:
+        branches:
+            - "master"
 
 jobs:
     generate-test-release:
         name: "Generating Test Release"
-        runs-on: "ubuntu-latest"
     
         strategy:
             matrix:
                 python-version: [ '3.6', '3.7', '3.8', '3.9', '3.10' ]
+                platform: [ macos-latest, ubuntu-latest ]
+        
+        runs-on: ${{ matrix.platform }}
     
         steps:
             - uses: actions/checkout@v2
@@ -29,7 +32,7 @@ jobs:
                 pip install build
                 pip install wheel
             - name: Build package
-              run: ./generate_whl.sh
+              run: python3 setup.py bdist_wheel
             - name: Uploading Artifacts
               uses: actions/upload-artifact@v3
               with:
@@ -37,6 +40,26 @@ jobs:
                   path: |
                         dist/*.whl
                         dist/*.tar.gz
+    
+    test-test-release:
+        name: "Testing Wheel Files for GitHub Test-Release"
+        needs: generate-test-release
+    
+        strategy:
+            matrix:
+                python-version: [ '3.7', '3.8', '3.9', '3.10' ]
+                platform: [ macos-latest, ubuntu-latest ]
+                
+        runs-on: ${{ matrix.platform }}
+    
+        steps:
+            - uses: actions/checkout@v2
+            - name: Set up Python
+              uses: actions/setup-python@v2
+              with:
+                  python-version: ${{ matrix.python-version }}
+            - name: Install Wheel
+              run: echo '${{ matrix.python-version }}'
     
     test-release:
         name: "Test Release"

@@ -2,8 +2,6 @@
 
 ![Run Unit Tests](https://github.com/rtsfred3/pyntegrate/workflows/Run%20Unit%20Tests/badge.svg)
 
-[![CodeQL](https://github.com/rtsfred3/pyntegrate/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/rtsfred3/pyntegrate/actions/workflows/codeql-analysis.yml)
-
 Mirrored on [GitLab](https://gitlab.com/rtsfred3/pyntegrate)
 
 ## What are C Extensions in Python?

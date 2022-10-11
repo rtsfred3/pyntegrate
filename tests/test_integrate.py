@@ -1,5 +1,6 @@
 import time, unittest
 
+import pyntegrate
 import pyntegrate.pyarctan as pyarctan
 import pyntegrate.arctan as arctan
 
@@ -46,7 +47,17 @@ class TestArctanMethods(unittest.TestCase):
     
     def test_makeArrSequential(self):
         assert arctan.makeArrSequential(10) == [i for i in range(10)]
+        assert arctan.makeArrSequential(100) == [i for i in range(100)]
+        assert arctan.makeArrSequential(0) == []
         assert arctan.makeArrSequential(-1) == []
+        assert arctan.makeArrSequential(-10) == []
+        
+    def test_makeArrZeroes(self):
+        assert arctan.makeArrZeros(10) == [0 for i in range(10)]
+        assert arctan.makeArrZeros(100) == [0 for i in range(100)]
+        assert arctan.makeArrZeros(0) == []
+        assert arctan.makeArrZeros(-1) == []
+        assert arctan.makeArrZeros(-10) == []
 
 class TestPyarctanMethods(unittest.TestCase):
     def setUp(self):

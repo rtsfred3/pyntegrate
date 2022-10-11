@@ -2,9 +2,9 @@
 name: "release"
 
 on:
-  push:
-    branches:
-      - "pypi"
+    push:
+        branches:
+            - "pypi"
 
 jobs:
     gen-release:

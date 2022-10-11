@@ -1,8 +1,8 @@
 __title__ = 'pyntegrate'
-__description__ = 'Pyntegrate is an example of various sorting algorithms using C Extensions.'
+__description__ = 'Pyntegrate is an example of various sorting algorithms and other functions using C Extensions.'
 __url__ = 'https://github.com/rtsfred3/pyntegrate'
 __download_url__ = 'https://pypi.org/project/pyntegrate/'
-__version__ = '1.3.6.dev10'
+__version__ = '1.3.6.dev13'
 __author__ = 'Ryan Fredrickson'
 __author_email__ = 'rtsfred3@gmail.com'
 __project_urls__ = {
