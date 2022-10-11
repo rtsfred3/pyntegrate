@@ -5,9 +5,10 @@
 
 #ifdef _POSIX_VERSION
 #include <pthread.h>
+#include <unistd.h>
 #endif
 
-#include <unistd.h>
+
 
 #include <Python.h>
 
