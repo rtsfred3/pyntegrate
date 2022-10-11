@@ -93,3 +93,22 @@ jobs:
               with:
                 user: __token__
                 password: ${{ secrets.PYPI_API_TOKEN }}
+    
+    # release-branch:
+    #     name: "Creates Release Branch"
+    #     runs-on: "ubuntu-latest"
+    #
+    #     steps:
+    #         - uses: actions/checkout@v2
+    #         - name: Set up Python
+    #           uses: actions/setup-python@v2
+    #           with:
+    #               python-version: ${{ matrix.python-version }}
+    #         - name: Get Version Number
+    #           id: version
+    #           run: echo "::set-output name=version::$(python3 setup.py --version)"
+    #         - name: Committing Archive to Repo
+    #           run: |
+    #             git config --global user.email "${{ secrets.EMAIL }}"
+    #             git config --global user.name ${{ secrets.USERNAME }}
+    #             git checkout
