@@ -49,4 +49,4 @@ jobs:
             - name: Installing pyntegrate
               run: python3 setup.py install
             - name: Running Unit Tests
-              run: cd tests/ && python3 -m unittest test_integrate.py
+              run: cd tests && python3 -m unittest test_integrate.py
