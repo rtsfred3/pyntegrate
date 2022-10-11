@@ -111,48 +111,6 @@ int isPrime(d_type n){
     return 1;
 }
 
-void* checkPrimes(void *vals){
-    uint *arr = (uint *)((uint *)vals);
-
-    uint i;
-    for(i = arr[0]; i < arr[1]; i++){ if(isPrime(i)){ arr[3]++; } }
-
-    if(arr[2] != 0){ pthread_exit(NULL); }
-    return NULL;
-}
-
-int compute_primes(uint n, uint NUM_THREADS){
-    pthread_t threads[NUM_THREADS];
-
-    uint arr[NUM_THREADS][4];
-
-    uint i;
-    for(i = 0; i<NUM_THREADS; i++){
-        arr[i][0] = (uint)((i)*(n/NUM_THREADS));
-        arr[i][1] = (uint)((i+1)*(n/NUM_THREADS));
-        arr[i][2] = NUM_THREADS-i-1;
-        arr[i][3] = 0;
-    }
-
-    if(arr[NUM_THREADS-1][1] != n){ arr[NUM_THREADS-1][1] = n; }
-
-    for(i = 0; i<NUM_THREADS-1; i++){
-        pthread_create(&threads[i], NULL, checkPrimes, (void *)&arr[i]);
-    }
-
-    checkPrimes((void *)&arr[NUM_THREADS-1]);
-
-    for(i = 0; i<NUM_THREADS-1; i++){
-        pthread_join(threads[i], NULL);
-    }
-
-    int total = 0;
-    for(i = 0; i<NUM_THREADS; i++){
-        total += arr[i][3];
-    }
-    return total;
-}
-
 void merge(d_type *a, int n, int m) {
     int i, j, k;
     d_type *x = malloc(n * sizeof(d_type));
@@ -317,6 +275,48 @@ float chudnovsky(uint n){
 }
 
 #ifdef _POSIX_VERSION
+
+void* checkPrimes(void *vals){
+    uint *arr = (uint *)((uint *)vals);
+
+    uint i;
+    for(i = arr[0]; i < arr[1]; i++){ if(isPrime(i)){ arr[3]++; } }
+
+    if(arr[2] != 0){ pthread_exit(NULL); }
+    return NULL;
+}
+
+int compute_primes(uint n, uint NUM_THREADS){
+    pthread_t threads[NUM_THREADS];
+
+    uint arr[NUM_THREADS][4];
+
+    uint i;
+    for(i = 0; i<NUM_THREADS; i++){
+        arr[i][0] = (uint)((i)*(n/NUM_THREADS));
+        arr[i][1] = (uint)((i+1)*(n/NUM_THREADS));
+        arr[i][2] = NUM_THREADS-i-1;
+        arr[i][3] = 0;
+    }
+
+    if(arr[NUM_THREADS-1][1] != n){ arr[NUM_THREADS-1][1] = n; }
+
+    for(i = 0; i<NUM_THREADS-1; i++){
+        pthread_create(&threads[i], NULL, checkPrimes, (void *)&arr[i]);
+    }
+
+    checkPrimes((void *)&arr[NUM_THREADS-1]);
+
+    for(i = 0; i<NUM_THREADS-1; i++){
+        pthread_join(threads[i], NULL);
+    }
+
+    int total = 0;
+    for(i = 0; i<NUM_THREADS; i++){
+        total += arr[i][3];
+    }
+    return total;
+}
 
 void* parallel_merge_sortC(void *args){
     pthread_t thread_id, thread_id2;
