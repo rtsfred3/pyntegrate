@@ -8,8 +8,6 @@
 #include <unistd.h>
 #endif
 
-
-
 #include <Python.h>
 
 // #define d_type long
@@ -1028,15 +1026,19 @@ static PyMethodDef arctan_methods[] = {
     { "bubblesort", bubblesort, METH_VARARGS, "Sorts array" },
     { "bubblesort2", bubblesort2, METH_VARARGS, "Sorts array" },
     { "mergesort", merge_sort, METH_VARARGS, "Sorts array" },
+    
+    #ifdef _POSIX_VERSION
     { "p_mergesort", parallel_merge_sort, METH_VARARGS, "Sorts array" },
+    { "p_quicksort", p_quick_sort, METH_VARARGS, "Sorts array" },
+    { "p_primes", p_primes, METH_VARARGS, "Checks if prime" },
+    #endif
+    
     { "insertionsort", insert_sort, METH_VARARGS, "Sorts array" },
     { "quicksort", quick_sort, METH_VARARGS, "Sorts array" },
-    { "p_quicksort", p_quick_sort, METH_VARARGS, "Sorts array" },
     { "bucketsort", bucket_sort, METH_VARARGS, "Sorts array" },
     { "pass_arr", pass_arr, METH_VARARGS, "Passes array" },
     { "isPrime", is_prime, METH_VARARGS, "Checks if prime" },
     { "primes", primes, METH_VARARGS, "Checks if prime" },
-    { "p_primes", p_primes, METH_VARARGS, "Checks if prime" },
     { "makeArrMin", makeArr, METH_VARARGS, "Makes an array of random values" },
     { "makeArrMinRandom", makeArr, METH_VARARGS, "Makes an array of random values" },
     { "makeArrSequential", makeArrSequential, METH_VARARGS, "Makes an array of sequential values" },
