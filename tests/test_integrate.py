@@ -20,19 +20,19 @@ class TestArctanMethods(unittest.TestCase):
     def test_quicksort(self):
         assert arctan.quicksort([4, 2, 3, 1]) == [1, 2, 3, 4]
     
-    def test_p_quicksort(self):
-        assert arctan.p_quicksort([4, 2, 3, 1]) == [1, 2, 3, 4]
-    
     def test_mergesort(self):
         assert arctan.mergesort([4, 2, 3, 1]) == [1, 2, 3, 4]
-    
-    def test_p_mergesort(self):
-        assert arctan.p_mergesort([4, 2, 3, 1]) == [1, 2, 3, 4]
     
     def test_insertionsort(self):
         assert arctan.insertionsort([4, 2, 3, 1]) == [1, 2, 3, 4]
     
-    '''def test_bucketsort(self):
+    '''def test_p_quicksort(self):
+        assert arctan.p_quicksort([4, 2, 3, 1]) == [1, 2, 3, 4]
+    
+    def test_p_mergesort(self):
+        assert arctan.p_mergesort([4, 2, 3, 1]) == [1, 2, 3, 4]
+    
+    def test_bucketsort(self):
         assert arctan.bucketsort([4, 2, 3, 1]) == [1, 2, 3, 4]
     
     def test_ackermann(self):
