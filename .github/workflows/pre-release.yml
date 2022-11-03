@@ -2,8 +2,9 @@
 name: "pre-release"
 
 on:
-    schedule:
-        - cron: '0 0 * * *'
+    push:
+        branches:
+            - "pypi-staging"
 
 jobs:
     gen-pre-release:
@@ -29,7 +30,7 @@ jobs:
                 pip install build
                 pip install wheel
             - name: Build package
-              run: ./generate_whl.sh
+              run: ./generate_whl.sh && python3 setup.py bdist_wheel --plat-name=win32 && python3 setup.py bdist_wheel --plat-name=win-amd64
             - name: Uploading Artifacts
               uses: actions/upload-artifact@v3
               with:
@@ -71,7 +72,7 @@ jobs:
                   repo_token: "${{ secrets.GITHUB_TOKEN }}"
                   automatic_release_tag: "dev_v${{ steps.version.outputs.version }}"
                   prerelease: true
-                  title: "Dev Build v${{ steps.version.outputs.version }}"
+                  title: "v${{ steps.version.outputs.version }}"
                   files: |
                         dist/*.whl
                         dist/*.tar.gz

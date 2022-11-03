@@ -2,9 +2,11 @@
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
-#include <pthread.h>
 
+#ifdef _POSIX_VERSION
+#include <pthread.h>
 #include <unistd.h>
+#endif
 
 #include <Python.h>
 
@@ -109,48 +111,6 @@ int isPrime(d_type n){
     return 1;
 }
 
-void* checkPrimes(void *vals){
-    uint *arr = (uint *)((uint *)vals);
-
-    uint i;
-    for(i = arr[0]; i < arr[1]; i++){ if(isPrime(i)){ arr[3]++; } }
-
-    if(arr[2] != 0){ pthread_exit(NULL); }
-    return NULL;
-}
-
-int compute_primes(uint n, uint NUM_THREADS){
-    pthread_t threads[NUM_THREADS];
-
-    uint arr[NUM_THREADS][4];
-
-    uint i;
-    for(i = 0; i<NUM_THREADS; i++){
-        arr[i][0] = (uint)((i)*(n/NUM_THREADS));
-        arr[i][1] = (uint)((i+1)*(n/NUM_THREADS));
-        arr[i][2] = NUM_THREADS-i-1;
-        arr[i][3] = 0;
-    }
-
-    if(arr[NUM_THREADS-1][1] != n){ arr[NUM_THREADS-1][1] = n; }
-
-    for(i = 0; i<NUM_THREADS-1; i++){
-        pthread_create(&threads[i], NULL, checkPrimes, (void *)&arr[i]);
-    }
-
-    checkPrimes((void *)&arr[NUM_THREADS-1]);
-
-    for(i = 0; i<NUM_THREADS-1; i++){
-        pthread_join(threads[i], NULL);
-    }
-
-    int total = 0;
-    for(i = 0; i<NUM_THREADS; i++){
-        total += arr[i][3];
-    }
-    return total;
-}
-
 void merge(d_type *a, int n, int m) {
     int i, j, k;
     d_type *x = malloc(n * sizeof(d_type));
@@ -173,41 +133,6 @@ void merge_sortC(d_type *arr, int n){
     merge_sortC(arr, m);
     merge_sortC(arr + m, n - m);
     merge(arr, n, m);
-}
-
-void* parallel_merge_sortC(void *args){
-    pthread_t thread_id, thread_id2;
-    d_type *arr = ((struct arg_struct *)args)->arr;
-    int n = ((struct arg_struct *)args)->arg1;
-    int depth = ((struct arg_struct *)args)->depth;
-
-    if (n < 2){ return NULL; }
-
-    int m = (int)(n / 2);
-
-    struct arg_struct args_t;
-    args_t.arr = arr;
-    args_t.arg1 = m;
-    args_t.depth = depth+1;
-
-    struct arg_struct args_m;
-    args_m.arr = arr + m;
-    args_m.arg1 = n - m;
-    args_m.depth = depth+1;
-
-    if(depth > 2){
-        parallel_merge_sortC((void *)&args_t);
-        parallel_merge_sortC((void *)&args_m);
-    }else{
-        pthread_create(&thread_id, NULL, parallel_merge_sortC, (void *)&args_t);
-        pthread_create(&thread_id2, NULL, parallel_merge_sortC, (void *)&args_m);
-        pthread_join(thread_id2, NULL);
-        pthread_join(thread_id, NULL);
-    }
-
-    merge(arr, n, m);
-
-    return NULL;
 }
 
 void bubble_sort(d_type *arr, int n){
@@ -270,44 +195,6 @@ void quicksort(d_type *arr, int low, int high){
         quicksort(arr, low, part);
         quicksort(arr, part+1, high);
     }
-}
-
-void* p_quicksort(void *args){
-    pthread_t thread_id, thread_id2;
-    d_type *arr = ((struct arg_struct *)args)->arr;
-    int low = ((struct arg_struct *)args)->arg1;
-    int high = ((struct arg_struct *)args)->arg2;
-    int depth = ((struct arg_struct *)args)->depth;
-    if(low >= high){ return NULL; }
-
-    if(low < high){
-        int part = partition(arr, low, high);
-
-        struct arg_struct argv_t;
-        argv_t.arr = arr;
-        argv_t.arg1 = low;
-        argv_t.arg2 = part;
-        argv_t.depth = depth+1;
-
-        struct arg_struct argv_m;
-        argv_m.arr = arr;
-        argv_m.arg1 = part+1;
-        argv_m.arg2 = high;
-        argv_m.depth = depth+1;
-
-        if(depth > 2){
-            p_quicksort((void *)&argv_t);
-            p_quicksort((void *)&argv_m);
-        }else{
-            pthread_create(&thread_id, NULL, p_quicksort, (void *)&argv_t);
-            pthread_create(&thread_id2, NULL, p_quicksort, (void *)&argv_m);
-
-            pthread_join(thread_id2, NULL);
-            pthread_join(thread_id, NULL);
-        }
-    }
-
-    return NULL;
 }
 
 void bucketsort(d_type *arr, int n){
@@ -387,6 +274,251 @@ float chudnovsky(uint n){
     return (426880.0*sqrt(10005))/summation;
 }
 
+#ifdef _POSIX_VERSION
+
+void* checkPrimes(void *vals){
+    uint *arr = (uint *)((uint *)vals);
+
+    uint i;
+    for(i = arr[0]; i < arr[1]; i++){ if(isPrime(i)){ arr[3]++; } }
+
+    if(arr[2] != 0){ pthread_exit(NULL); }
+    return NULL;
+}
+
+int compute_primes(uint n, uint NUM_THREADS){
+    pthread_t threads[NUM_THREADS];
+
+    uint arr[NUM_THREADS][4];
+
+    uint i;
+    for(i = 0; i<NUM_THREADS; i++){
+        arr[i][0] = (uint)((i)*(n/NUM_THREADS));
+        arr[i][1] = (uint)((i+1)*(n/NUM_THREADS));
+        arr[i][2] = NUM_THREADS-i-1;
+        arr[i][3] = 0;
+    }
+
+    if(arr[NUM_THREADS-1][1] != n){ arr[NUM_THREADS-1][1] = n; }
+
+    for(i = 0; i<NUM_THREADS-1; i++){
+        pthread_create(&threads[i], NULL, checkPrimes, (void *)&arr[i]);
+    }
+
+    checkPrimes((void *)&arr[NUM_THREADS-1]);
+
+    for(i = 0; i<NUM_THREADS-1; i++){
+        pthread_join(threads[i], NULL);
+    }
+
+    int total = 0;
+    for(i = 0; i<NUM_THREADS; i++){
+        total += arr[i][3];
+    }
+    return total;
+}
+
+void* parallel_merge_sortC(void *args){
+    pthread_t thread_id, thread_id2;
+    d_type *arr = ((struct arg_struct *)args)->arr;
+    int n = ((struct arg_struct *)args)->arg1;
+    int depth = ((struct arg_struct *)args)->depth;
+
+    if (n < 2){ return NULL; }
+
+    int m = (int)(n / 2);
+
+    struct arg_struct args_t;
+    args_t.arr = arr;
+    args_t.arg1 = m;
+    args_t.depth = depth+1;
+
+    struct arg_struct args_m;
+    args_m.arr = arr + m;
+    args_m.arg1 = n - m;
+    args_m.depth = depth+1;
+
+    if(depth > 2){
+        parallel_merge_sortC((void *)&args_t);
+        parallel_merge_sortC((void *)&args_m);
+    }else{
+        pthread_create(&thread_id, NULL, parallel_merge_sortC, (void *)&args_t);
+        pthread_create(&thread_id2, NULL, parallel_merge_sortC, (void *)&args_m);
+        pthread_join(thread_id2, NULL);
+        pthread_join(thread_id, NULL);
+    }
+
+    merge(arr, n, m);
+
+    return NULL;
+}
+
+void* p_quicksort(void *args){
+    pthread_t thread_id, thread_id2;
+    d_type *arr = ((struct arg_struct *)args)->arr;
+    int low = ((struct arg_struct *)args)->arg1;
+    int high = ((struct arg_struct *)args)->arg2;
+    int depth = ((struct arg_struct *)args)->depth;
+    if(low >= high){ return NULL; }
+
+    if(low < high){
+        int part = partition(arr, low, high);
+
+        struct arg_struct argv_t;
+        argv_t.arr = arr;
+        argv_t.arg1 = low;
+        argv_t.arg2 = part;
+        argv_t.depth = depth+1;
+
+        struct arg_struct argv_m;
+        argv_m.arr = arr;
+        argv_m.arg1 = part+1;
+        argv_m.arg2 = high;
+        argv_m.depth = depth+1;
+
+        if(depth > 2){
+            p_quicksort((void *)&argv_t);
+            p_quicksort((void *)&argv_m);
+        }else{
+            pthread_create(&thread_id, NULL, p_quicksort, (void *)&argv_t);
+            pthread_create(&thread_id2, NULL, p_quicksort, (void *)&argv_m);
+
+            pthread_join(thread_id2, NULL);
+            pthread_join(thread_id, NULL);
+        }
+    }
+
+    return NULL;
+}
+
+static PyObject* p_primes(PyObject *self, PyObject *args){
+    d_type x;
+    int total = 0;
+
+    if(!PyArg_ParseTuple(args, "l", &x)){
+        return NULL;
+    }
+
+    long number_of_processors = sysconf(_SC_NPROCESSORS_ONLN);
+
+    total = compute_primes((uint)x, (uint)number_of_processors);
+
+    return Py_BuildValue("i", total);
+}
+
+static PyObject* parallel_merge_sort(PyObject *self, PyObject *args){
+    PyObject* seq;
+    int i, seqlen;
+    d_type * dbar;
+
+    if(!PyArg_ParseTuple(args, "O", &seq)){
+        return NULL;
+    }
+
+    seq = PySequence_Fast(seq, "argument must be iterable");
+    if(!seq){ return NULL; }
+
+    seqlen = PySequence_Fast_GET_SIZE(seq);
+    dbar = malloc(seqlen*sizeof(d_type));
+    if(!dbar) {
+        Py_DECREF(seq);
+        return PyErr_NoMemory(  );
+    }
+
+    for(i = 0; i < seqlen; i++) {
+        PyObject *fitem;
+        PyObject *item = PySequence_Fast_GET_ITEM(seq, i);
+        if(!item) {
+            Py_DECREF(seq);
+            free(dbar);
+            return 0;
+        }
+        fitem = PyNumber_Long(item);
+        if(!fitem) {
+            Py_DECREF(seq);
+            free(dbar);
+            PyErr_SetString(PyExc_TypeError, "all items must be numbers");
+            return 0;
+        }
+        dbar[i] = PyLong_AsLong(fitem);
+        Py_DECREF(fitem);
+    }
+
+    struct arg_struct argv;
+    argv.arr = dbar;
+    argv.arg1 = seqlen;
+    argv.depth = 0;
+
+    // parallel_merge_sortC(dbar, seqlen);
+    parallel_merge_sortC((void *)&argv);
+
+    for(i = 0; i < seqlen; i++){
+        PySequence_SetItem(seq, i, PyLong_FromLong(dbar[i]));
+    }
+
+    free(dbar);
+
+    return Py_BuildValue("O", seq);
+}
+
+static PyObject* p_quick_sort(PyObject *self, PyObject *args){
+    PyObject* seq;
+    int i, seqlen;
+    d_type * dbar;
+
+    if(!PyArg_ParseTuple(args, "O", &seq)){
+        return NULL;
+    }
+
+    seq = PySequence_Fast(seq, "argument must be iterable");
+    if(!seq){ return NULL; }
+
+    seqlen = PySequence_Fast_GET_SIZE(seq);
+    dbar = malloc(seqlen*sizeof(d_type));
+    if(!dbar) {
+        Py_DECREF(seq);
+        return PyErr_NoMemory(  );
+    }
+
+    for(i = 0; i < seqlen; i++) {
+        PyObject *fitem;
+        PyObject *item = PySequence_Fast_GET_ITEM(seq, i);
+        if(!item) {
+            Py_DECREF(seq);
+            free(dbar);
+            return 0;
+        }
+        fitem = PyNumber_Long(item);
+        if(!fitem) {
+            Py_DECREF(seq);
+            free(dbar);
+            PyErr_SetString(PyExc_TypeError, "all items must be numbers");
+            return 0;
+        }
+        dbar[i] = PyLong_AsLong(fitem);
+        Py_DECREF(fitem);
+    }
+
+    struct arg_struct argv;
+    argv.arr = dbar;
+    argv.arg1 = 0;
+    argv.arg2 = seqlen;
+    argv.depth = 0;
+
+    // parallel_merge_sortC(dbar, seqlen);
+    p_quicksort((void *)&argv);
+
+    for(i = 0; i < seqlen; i++){
+        PySequence_SetItem(seq, i, PyLong_FromLong(dbar[i]));
+    }
+
+    free(dbar);
+
+    return Py_BuildValue("O", seq);
+}
+
+#endif
+
 static PyObject* arctan(PyObject *self, PyObject *args){
     double x;
 
@@ -444,21 +576,6 @@ static PyObject* primes(PyObject *self, PyObject *args){
     for(i = 0; i<x; i++){
         if(isPrime(i)){ total++; }
     }
-
-    return Py_BuildValue("i", total);
-}
-
-static PyObject* p_primes(PyObject *self, PyObject *args){
-    d_type x;
-    int total = 0;
-
-    if(!PyArg_ParseTuple(args, "l", &x)){
-        return NULL;
-    }
-
-    long number_of_processors = sysconf(_SC_NPROCESSORS_ONLN);
-
-    total = compute_primes((uint)x, (uint)number_of_processors);
 
     return Py_BuildValue("i", total);
 }
@@ -663,61 +780,6 @@ static PyObject* merge_sort(PyObject *self, PyObject *args){
     return Py_BuildValue("O", seq);
 }
 
-static PyObject* parallel_merge_sort(PyObject *self, PyObject *args){
-    PyObject* seq;
-    int i, seqlen;
-    d_type * dbar;
-
-    if(!PyArg_ParseTuple(args, "O", &seq)){
-        return NULL;
-    }
-
-    seq = PySequence_Fast(seq, "argument must be iterable");
-    if(!seq){ return NULL; }
-
-    seqlen = PySequence_Fast_GET_SIZE(seq);
-    dbar = malloc(seqlen*sizeof(d_type));
-    if(!dbar) {
-        Py_DECREF(seq);
-        return PyErr_NoMemory(  );
-    }
-
-    for(i = 0; i < seqlen; i++) {
-        PyObject *fitem;
-        PyObject *item = PySequence_Fast_GET_ITEM(seq, i);
-        if(!item) {
-            Py_DECREF(seq);
-            free(dbar);
-            return 0;
-        }
-        fitem = PyNumber_Long(item);
-        if(!fitem) {
-            Py_DECREF(seq);
-            free(dbar);
-            PyErr_SetString(PyExc_TypeError, "all items must be numbers");
-            return 0;
-        }
-        dbar[i] = PyLong_AsLong(fitem);
-        Py_DECREF(fitem);
-    }
-
-    struct arg_struct argv;
-    argv.arr = dbar;
-    argv.arg1 = seqlen;
-    argv.depth = 0;
-
-    // parallel_merge_sortC(dbar, seqlen);
-    parallel_merge_sortC((void *)&argv);
-
-    for(i = 0; i < seqlen; i++){
-        PySequence_SetItem(seq, i, PyLong_FromLong(dbar[i]));
-    }
-
-    free(dbar);
-
-    return Py_BuildValue("O", seq);
-}
-
 static PyObject* quick_sort(PyObject *self, PyObject *args){
     PyObject* seq;
     int i, seqlen;
@@ -757,62 +819,6 @@ static PyObject* quick_sort(PyObject *self, PyObject *args){
     }
 
     quicksort(dbar, 0, seqlen);
-
-    for(i = 0; i < seqlen; i++){
-        PySequence_SetItem(seq, i, PyLong_FromLong(dbar[i]));
-    }
-
-    free(dbar);
-
-    return Py_BuildValue("O", seq);
-}
-
-static PyObject* p_quick_sort(PyObject *self, PyObject *args){
-    PyObject* seq;
-    int i, seqlen;
-    d_type * dbar;
-
-    if(!PyArg_ParseTuple(args, "O", &seq)){
-        return NULL;
-    }
-
-    seq = PySequence_Fast(seq, "argument must be iterable");
-    if(!seq){ return NULL; }
-
-    seqlen = PySequence_Fast_GET_SIZE(seq);
-    dbar = malloc(seqlen*sizeof(d_type));
-    if(!dbar) {
-        Py_DECREF(seq);
-        return PyErr_NoMemory(  );
-    }
-
-    for(i = 0; i < seqlen; i++) {
-        PyObject *fitem;
-        PyObject *item = PySequence_Fast_GET_ITEM(seq, i);
-        if(!item) {
-            Py_DECREF(seq);
-            free(dbar);
-            return 0;
-        }
-        fitem = PyNumber_Long(item);
-        if(!fitem) {
-            Py_DECREF(seq);
-            free(dbar);
-            PyErr_SetString(PyExc_TypeError, "all items must be numbers");
-            return 0;
-        }
-        dbar[i] = PyLong_AsLong(fitem);
-        Py_DECREF(fitem);
-    }
-
-    struct arg_struct argv;
-    argv.arr = dbar;
-    argv.arg1 = 0;
-    argv.arg2 = seqlen;
-    argv.depth = 0;
-
-    // parallel_merge_sortC(dbar, seqlen);
-    p_quicksort((void *)&argv);
 
     for(i = 0; i < seqlen; i++){
         PySequence_SetItem(seq, i, PyLong_FromLong(dbar[i]));
@@ -1020,15 +1026,19 @@ static PyMethodDef arctan_methods[] = {
     { "bubblesort", bubblesort, METH_VARARGS, "Sorts array" },
     { "bubblesort2", bubblesort2, METH_VARARGS, "Sorts array" },
     { "mergesort", merge_sort, METH_VARARGS, "Sorts array" },
+    
+    #ifdef _POSIX_VERSION
     { "p_mergesort", parallel_merge_sort, METH_VARARGS, "Sorts array" },
+    { "p_quicksort", p_quick_sort, METH_VARARGS, "Sorts array" },
+    { "p_primes", p_primes, METH_VARARGS, "Checks if prime" },
+    #endif
+    
     { "insertionsort", insert_sort, METH_VARARGS, "Sorts array" },
     { "quicksort", quick_sort, METH_VARARGS, "Sorts array" },
-    { "p_quicksort", p_quick_sort, METH_VARARGS, "Sorts array" },
     { "bucketsort", bucket_sort, METH_VARARGS, "Sorts array" },
     { "pass_arr", pass_arr, METH_VARARGS, "Passes array" },
     { "isPrime", is_prime, METH_VARARGS, "Checks if prime" },
     { "primes", primes, METH_VARARGS, "Checks if prime" },
-    { "p_primes", p_primes, METH_VARARGS, "Checks if prime" },
     { "makeArrMin", makeArr, METH_VARARGS, "Makes an array of random values" },
     { "makeArrMinRandom", makeArr, METH_VARARGS, "Makes an array of random values" },
     { "makeArrSequential", makeArrSequential, METH_VARARGS, "Makes an array of sequential values" },

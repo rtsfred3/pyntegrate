@@ -2,6 +2,15 @@
 
 ![Run Unit Tests](https://github.com/rtsfred3/pyntegrate/workflows/Run%20Unit%20Tests/badge.svg)
 
+[![License](https://img.shields.io/pypi/l/pyntegrate)](https://badge.fury.io/py/pyntegrate)
+[![PyPI Version](https://img.shields.io/pypi/v/pyntegrate.svg)](https://badge.fury.io/py/pyntegrate)
+[![Python](https://img.shields.io/pypi/pyversions/pyntegrate.svg)](https://badge.fury.io/py/pyntegrate)
+
+[![Downloads](https://img.shields.io/pypi/dd/pyntegrate)](https://badge.fury.io/py/pyntegrate)
+
+
+![Custom badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fapiv2.githubstat.us%2Fapi%2Fv2%2Fendpoint.json)
+
 Mirrored on [GitLab](https://gitlab.com/rtsfred3/pyntegrate)
 
 ## What are C Extensions in Python?
