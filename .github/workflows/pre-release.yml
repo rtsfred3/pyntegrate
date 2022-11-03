@@ -3,7 +3,7 @@ name: "pre-release"
 
 on:
     schedule:
-        - "master"
+        - "pypi-staging"
 
 jobs:
     gen-pre-release:
@@ -29,7 +29,7 @@ jobs:
                 pip install build
                 pip install wheel
             - name: Build package
-              run: ./generate_whl.sh
+              run: ./generate_whl.sh && python3 setup.py bdist_wheel --plat-name=win32 && python3 setup.py bdist_wheel --plat-name=win-amd64
             - name: Uploading Artifacts
               uses: actions/upload-artifact@v3
               with:
