@@ -980,6 +980,24 @@ static PyObject* runChudnovsky(PyObject *self, PyObject *args){
     return Py_BuildValue("d", chudnovsky(n));
 }
 
+static PyObject* runWilson(PyObject *self, PyObject *args){
+    d_type n;
+
+    if(!PyArg_ParseTuple(args, "l", &n)){ return NULL; }
+    
+    uint a = wilson(n);
+    
+    return Py_BuildValue("l", a);
+}
+
+static PyObject* runWillans(PyObject *self, PyObject *args){
+    d_type n;
+
+    if(!PyArg_ParseTuple(args, "l", &n)){ return NULL; }
+    
+    return Py_BuildValue("l", willans(n));
+}
+
 static PyObject* runAckermann(PyObject *self, PyObject *args){
     unsigned long long m, n;
 
@@ -1047,6 +1065,8 @@ static PyMethodDef arctan_methods[] = {
     { "Ackermann", runAckermann, METH_VARARGS, "Ackermann Function" },
     { "AckermannLookup", runAckermannLookup, METH_VARARGS, "Ackermann Function w/ Look Up Table" },
     { "Chudnovsky", runChudnovsky, METH_VARARGS, "Chudnovsky Algorithm" },
+    { "wilson", runWilson, METH_VARARGS, "Wilson Algorithm" },
+    { "willans", runWillans, METH_VARARGS, "Willans Formula" },
     { NULL, NULL, 0, NULL }
 };
 

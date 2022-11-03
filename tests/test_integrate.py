@@ -25,6 +25,26 @@ class TestArctanMethods(unittest.TestCase):
     
     def test_insertionsort(self):
         assert arctan.insertionsort([4, 2, 3, 1]) == [1, 2, 3, 4]
+        
+    def test_wilson(self):
+        assert arctan.wilson(1) == 2
+        assert arctan.wilson(2) == 3
+        assert arctan.wilson(3) == 5
+        assert arctan.wilson(4) == 7
+        assert arctan.wilson(5) == 11
+        assert arctan.wilson(6) == 13
+        assert arctan.wilson(7) == 17
+        assert arctan.wilson(8) == 19
+    
+    def test_willans(self):
+        assert arctan.willans(1) == 2
+        assert arctan.willans(2) == 3
+        assert arctan.willans(3) == 5
+        assert arctan.willans(4) == 7
+        assert arctan.willans(5) == 11
+        assert arctan.willans(6) == 13
+        assert arctan.willans(7) == 17
+        assert arctan.willans(8) == 19
     
     '''def test_p_quicksort(self):
         assert arctan.p_quicksort([4, 2, 3, 1]) == [1, 2, 3, 4]
