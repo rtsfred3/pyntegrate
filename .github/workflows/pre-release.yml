@@ -2,8 +2,9 @@
 name: "pre-release"
 
 on:
-    schedule:
-        - "pypi-staging"
+    push:
+        branches:
+            - "pypi-staging"
 
 jobs:
     gen-pre-release:
