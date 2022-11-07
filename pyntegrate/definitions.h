@@ -22,6 +22,7 @@ double f3(double x){ return 0.0; }
 uint fact(uint n) { if(n <= 0){ return 1; }else{ return n * fact(n - 1); } }
 
 #define n_pi 4.0*integrate2(f, 0, 1, 100000000)
+#define o_pi 4.0*integrate(f, 0, 1)
 
 #define arr_swap(arr, a, b) { d_type temp = arr[a]; arr[a] = arr[b]; arr[b] = temp; }
 
@@ -47,7 +48,7 @@ uint willans_inner_summation(uint i){
     uint j;
     uint val = 0;
     for(j = 1; j <= i; j++){
-        val += (uint)floor(pow(cos(M_PI * (long double)willans_inner_funct(j)), 2));
+        val += (uint)floor(pow(cos(o_pi * (long double)willans_inner_funct(j)), 2));
     }
     return val;
 }
