@@ -565,7 +565,7 @@ static PyObject* pi(PyObject *self, PyObject *args){
 
 static PyObject* bubblesort(PyObject *self, PyObject *args){
     PyObject* seq;
-    int i, seqlen;
+    uint i, seqlen;
     d_type * dbar;
 
     if(!PyArg_ParseTuple(args, "O", &seq)){
@@ -981,9 +981,7 @@ static PyObject* runIsPrimeWilson(PyObject *self, PyObject *args){
     
     if(!PyArg_ParseTuple(args, "l", &n)){ return NULL; }
     
-    uint a = isPrimeWilson(n);
-    
-    return Py_BuildValue("l", a);
+    return Py_BuildValue("l", isPrimeWilson(n));
 }
 
 static PyObject* runWillans(PyObject *self, PyObject *args){
@@ -995,7 +993,7 @@ static PyObject* runWillans(PyObject *self, PyObject *args){
 }
 
 static PyObject* runAckermann(PyObject *self, PyObject *args){
-    unsigned long long m, n;
+    uint m, n;
 
     if(!PyArg_ParseTuple(args, "KK", &m, &n)){ return NULL; }
     
@@ -1003,7 +1001,7 @@ static PyObject* runAckermann(PyObject *self, PyObject *args){
 }
 
 static PyObject* runAckermannLookup(PyObject *self, PyObject *args){
-    unsigned long long m, n;
+    uint m, n;
 
     if(!PyArg_ParseTuple(args, "KK", &m, &n)){ return NULL; }
     

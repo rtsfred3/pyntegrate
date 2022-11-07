@@ -27,6 +27,8 @@ uint fact(uint n) { if(n <= 0){ return 1; }else{ return n * fact(n - 1); } }
 
 #define chudnovsky_X(q) { pow(-262537412640768000, q) }
 
+#define willans_inner_funct(j) { ((long double)(fact(j - 1) + 1)/(long double)(j)) }
+
 uint isPrimeWilson(uint n){
     return fact(n - 1) % n != 0 && n != 4;
 }
@@ -35,9 +37,9 @@ uint wilson(uint n){
     return ((uint)((fact(n) % (n+1)) / n) * (n - 1)) + 2;
 }
 
-long double willans_inner_funct(uint j) {
-    return ((long double)(fact(j - 1) + 1)/(long double)(j));
-}
+// long double willans_inner_funct(uint j) {
+//     return ((long double)(fact(j - 1) + 1)/(long double)(j));
+// }
 
 uint willans_inner_summation(uint i){
     uint j;
@@ -52,7 +54,7 @@ uint willans(uint n){
     uint i;
     float val = 0;
     for(i = 1; i <= pow(2, n); i++){
-        val += floor(pow((long double)n/(long double)willans_inner_summation(i), 1.0L/(long double)n));
+        val += (uint)floor(pow((long double)n/(long double)willans_inner_summation(i), 1.0L/(long double)n));
     }
     return 1 + val;
 }
