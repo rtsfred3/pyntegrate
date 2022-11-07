@@ -9,9 +9,16 @@
 
 #include <Python.h>
 
+double integrate(double (*f)(double), double a, double b);
+double integrate2(double (*f)(double), double a, double b, int n);
+
+// double f(double x){ return 1.0/(1.0 + x*x); }
+// double f2(double t){ return pow(t, 0 - 1) * pow(e, -t); }
+// double f3(double x){ return 0.0; }
+
 #include "definitions.h"
 
-double integrate(double (*f)(double), double a, double b);
+double f22(){ return integrate(f2, 0.0, 1000.0); }
 
 d_type getD_Type(d_type n){ return rand() % (n*n); }
 
@@ -27,12 +34,6 @@ int isSorted(d_type *arr, int n){
     for(i = 1; i < n; i++){ if(arr[i-1] > arr[i]){ return 0; } }
     return 1;
 }
-
-double f(double x){ return 1.0/(1.0 + x*x); }
-double f2(double t){ return pow(t, 0 - 1) * pow(e, -t); }
-double f22(){ return integrate(f2, 0.0, 1000.0); }
-
-double f3(double x){ return 0.0; }
 
 double integrate(double (*f)(double), double a, double b){
     int n = 5000000;

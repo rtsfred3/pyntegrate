@@ -15,7 +15,13 @@ struct arg_struct {
 
 double e = 2.718281828459045235360;
 
+double f(double x){ return 1.0/(1.0 + x*x); }
+double f2(double t){ return pow(t, 0 - 1) * pow(e, -t); }
+double f3(double x){ return 0.0; }
+
 uint fact(uint n) { if(n <= 0){ return 1; }else{ return n * fact(n - 1); } }
+
+#define n_pi 4.0*integrate2(f, 0, 1, 100000000)
 
 #define arr_swap(arr, a, b) { d_type temp = arr[a]; arr[a] = arr[b]; arr[b] = temp; }
 
@@ -36,10 +42,6 @@ uint isPrimeWilson(uint n){
 uint wilson(uint n){
     return ((uint)((fact(n) % (n+1)) / n) * (n - 1)) + 2;
 }
-
-// long double willans_inner_funct(uint j) {
-//     return ((long double)(fact(j - 1) + 1)/(long double)(j));
-// }
 
 uint willans_inner_summation(uint i){
     uint j;
