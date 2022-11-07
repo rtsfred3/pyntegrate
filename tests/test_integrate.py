@@ -1,4 +1,4 @@
-import time, unittest
+import os, time, unittest
 
 import pyntegrate
 import pyntegrate.pyarctan as pyarctan
@@ -56,10 +56,10 @@ class TestArctanMethods(unittest.TestCase):
         # assert arctan.willans(7) == 17
         # assert arctan.willans(8) == 19
     
-    '''def test_p_quicksort(self):
-        assert arctan.p_quicksort([4, 2, 3, 1]) == [1, 2, 3, 4]
+    def test_p_quicksort(self):
+        if os.name == 'posix': assert arctan.p_quicksort([4, 2, 3, 1]) == [1, 2, 3, 4]
     
-    def test_p_mergesort(self):
+    '''def test_p_mergesort(self):
         assert arctan.p_mergesort([4, 2, 3, 1]) == [1, 2, 3, 4]
     
     def test_bucketsort(self):
@@ -119,114 +119,6 @@ class TestPyarctanMethods(unittest.TestCase):
     
     def test_bucketsort(self):
        assert pyarctan.bucketsort(self.inputArr) == self.outputArr'''
-
-'''class TestTimeMethods(unittest.TestCase):
-    def setUp(self):
-        self.n = 100
-    
-    def test_bubblesort(self):
-        a, b = makeArr(self.n, 2)
-        
-        startC = time.time()
-        arctan.bubblesort(a)
-        timeC = time.time() - startC
-        
-        startPY = time.time()
-        pyarctan.bubblesort(b)
-        timePY = time.time() - startPY
-        
-        assert timeC < timePY
-    
-    def test_bubblesort2(self):
-        a, b = makeArr(self.n)
-        
-        startC = time.time()
-        arctan.bubblesort2(a)
-        timeC = time.time() - startC
-        
-        startPY = time.time()
-        pyarctan.bubblesort2(b)
-        timePY = time.time() - startPY
-        
-        assert timeC < timePY
-    
-    def test_quicksort(self):
-        a, b = makeArr(self.n)
-        
-        startC = time.time()
-        arctan.quicksort(a)
-        timeC = time.time() - startC
-        
-        startPY = time.time()
-        pyarctan.quicksort(b, 0, len(b))
-        timePY = time.time() - startPY
-        
-        assert timeC < timePY
-
-    def test_mergesort(self):
-        a, b = makeArr(self.n)
-        
-        startC = time.time()
-        arctan.mergesort(a)
-        timeC = time.time() - startC
-        
-        startPY = time.time()
-        pyarctan.mergesort(b)
-        timePY = time.time() - startPY
-        
-        assert timeC < timePY
-    
-    def test_p_quicksort(self):
-        a, b = makeArr(self.n)
-        
-        startC = time.time()
-        arctan.p_quicksort(a)
-        timeC = time.time() - startC
-        
-        startPY = time.time()
-        pyarctan.p_quicksort(pyarctan.arg_struct(b, 0, len(b), 0))
-        timePY = time.time() - startPY
-        
-        assert timeC < timePY
-
-    def test_p_mergesort(self):
-        a, b = makeArr(self.n)
-        
-        startC = time.time()
-        arctan.p_mergesort(a)
-        timeC = time.time() - startC
-        
-        startPY = time.time()
-        pyarctan.p_mergesort(pyarctan.arg_struct(b, 0, len(b), 0))
-        timePY = time.time() - startPY
-        
-        assert timeC < timePY
-
-    def test_insertionsort(self):
-        a, b = makeArr(self.n)
-        
-        startC = time.time()
-        arctan.insertionsort(a)
-        timeC = time.time() - startC
-        
-        startPY = time.time()
-        pyarctan.insertionsort(b)
-        timePY = time.time() - startPY
-        
-        assert timeC < timePY
-    
-    def test_makeArrSequential(self):
-        val = 1000000
-        
-        startC = time.time()
-        a = arctan.makeArrSequential(val)
-        timeC = time.time() - startC
-        
-        startPY = time.time()
-        b = [i for i in range(val)]
-        timePY = time.time() - startPY
-        
-        assert timeC < timePY'''
 
 if __name__ == '__main__':
     unittest.main()
