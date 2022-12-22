@@ -37,7 +37,9 @@ uint fact(uint n) { if(n <= 0){ return 1; }else{ return n * fact(n - 1); } }
 #define willans_inner_funct(j) { ((long double)(fact(j - 1) + 1)/(long double)(j)) }
 
 uint isPrimeWilson(uint n){
-    return fact(n - 1) % n != 0 && n != 4;
+    // return fact(n - 1) % n != 0 && n != 4;
+    
+    return fact(n - 1) / (n * n);
 }
 
 uint wilson(uint n){
