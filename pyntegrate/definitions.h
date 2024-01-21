@@ -26,7 +26,7 @@ uint fact(uint n) { if(n <= 0){ return 1; }else{ return n * fact(n - 1); } }
 
 #define arr_swap(arr, a, b) { d_type temp = arr[a]; arr[a] = arr[b]; arr[b] = temp; }
 
-#define arr_swap2(*a, *b) { *a = *a + *b; *b = *a - *b; *a = *a - *b; }
+// #define arr_swap2(*a, *b) { *a = *a + *b; *b = *a - *b; *a = *a - *b; }
 
 #define printArr(arr, n) { int ii; int ww = 10; printf("\n"); for(ii = 0; ii<n; ii++){ if((ii+1) % ww == 0 || ii == n-1){ printf("%7.2ld\n", arr[ii]); }else{ printf("%7.2ld ", arr[ii]); } } printf("\n"); }
 
