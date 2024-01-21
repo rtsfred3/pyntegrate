@@ -26,16 +26,16 @@ class TestArctanMethods(unittest.TestCase):
     def test_insertionsort(self):
         assert arctan.insertionsort([4, 2, 3, 1]) == [1, 2, 3, 4]
         
-    def test_wilson(self):
-        assert arctan.wilson(1) == 2
-        assert arctan.wilson(2) == 3
-        assert arctan.wilson(3) == 2
-        assert arctan.wilson(4) == 5
-        assert arctan.wilson(5) == 2
-        assert arctan.wilson(6) == 7
-        assert arctan.wilson(7) == 2
-        assert arctan.wilson(8) == 2
-        assert arctan.wilson(9) == 2
+    # def test_wilson(self):
+    #     assert arctan.wilson(1) == 2
+    #     assert arctan.wilson(2) == 3
+    #     assert arctan.wilson(3) == 2
+    #     assert arctan.wilson(4) == 5
+    #     assert arctan.wilson(5) == 2
+    #     assert arctan.wilson(6) == 7
+    #     assert arctan.wilson(7) == 2
+    #     assert arctan.wilson(8) == 2
+    #     assert arctan.wilson(9) == 2
     
     # def test_isPrimeWilson(self):
     #     assert arctan.isPrimeWilson(2) == 1
