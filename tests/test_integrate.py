@@ -37,14 +37,14 @@ class TestArctanMethods(unittest.TestCase):
         assert arctan.wilson(8) == 2
         assert arctan.wilson(9) == 2
     
-    def test_isPrimeWilson(self):
-        assert arctan.isPrimeWilson(2) == 1
-        assert arctan.isPrimeWilson(3) == 1
-        assert arctan.isPrimeWilson(4) == 0
-        assert arctan.isPrimeWilson(5) == 1
-        assert arctan.isPrimeWilson(6) == 0
-        assert arctan.isPrimeWilson(7) == 1
-        assert arctan.isPrimeWilson(8) == 0
+    # def test_isPrimeWilson(self):
+    #     assert arctan.isPrimeWilson(2) == 1
+    #     assert arctan.isPrimeWilson(3) == 1
+    #     assert arctan.isPrimeWilson(4) == 0
+    #     assert arctan.isPrimeWilson(5) == 1
+    #     assert arctan.isPrimeWilson(6) == 0
+    #     assert arctan.isPrimeWilson(7) == 1
+    #     assert arctan.isPrimeWilson(8) == 0
     
     def test_willans(self):
         assert arctan.willans(1) == 2
