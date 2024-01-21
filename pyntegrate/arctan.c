@@ -146,7 +146,7 @@ void insertion_sort(d_type *arr, int n){
     int i, j;
     // d_type key;
     for(j = 1; j < n; j++){
-        d_type key = arr[j];
+        // d_type key = arr[j];
         i = j;
         while(i > 0 && arr[i-1] > arr[i]){
             arr_swap(arr, i-1, i);
