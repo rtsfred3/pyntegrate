@@ -1,36 +1,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <time.h>
 
 #ifdef _POSIX_VERSION
-#include <pthread.h>
-#include <unistd.h>
+    #include <pthread.h>
+    #include <unistd.h>
 #endif
 
 #include <Python.h>
 
-// #define d_type long
-// #define uint unsigned long long
+double integrate(double (*f)(double), double a, double b);
+double integrate2(double (*f)(double), double a, double b, int n);
 
-// #define arr_swap(arr, a, b) { d_type temp = arr[a]; arr[a] = arr[b]; arr[b] = temp; }
-
-// #define printArr(arr, n) { int ii; int ww = 10; printf("\n"); for(ii = 0; ii<n; ii++){ if((ii+1) % ww == 0 || ii == n-1){ printf("%7.2ld\n", arr[ii]); }else{ printf("%7.2ld ", arr[ii]); } } printf("\n"); }
+// double f(double x){ return 1.0/(1.0 + x*x); }
+// double f2(double t){ return pow(t, 0 - 1) * pow(e, -t); }
+// double f3(double x){ return 0.0; }
 
 #include "definitions.h"
 
-uint ackermannLookupTable[100][1000];
-
-struct arg_struct {
-    d_type *arr;
-    int arg1;
-    int arg2;
-    int depth;
-};
-
-double integrate(double (*f)(double), double a, double b);
-
-double e = 2.718281828459045235360;
+double f22(){ return integrate(f2, 0.0, 1000.0); }
 
 d_type getD_Type(d_type n){ return rand() % (n*n); }
 
@@ -43,17 +31,9 @@ void makeArray(d_type * dbar, d_type n, d_type seed){
 
 int isSorted(d_type *arr, int n){
     int i;
-    for(i = 1; i < n; i++){
-        if(arr[i-1] > arr[i]){ return 0; }
-    }
+    for(i = 1; i < n; i++){ if(arr[i-1] > arr[i]){ return 0; } }
     return 1;
 }
-
-double f(double x){ return 1.0/(1.0 + x*x); }
-double f2(double t){ return pow(t, 0 - 1) * pow(e, -t); }
-double f22(){ return integrate(f2, 0.0, 1000.0); }
-
-double f3(double x){ return 0.0; }
 
 double integrate(double (*f)(double), double a, double b){
     int n = 5000000;
@@ -164,9 +144,9 @@ void bubble_sort2(d_type *arr, int n){
 
 void insertion_sort(d_type *arr, int n){
     int i, j;
-    d_type key;
+    // d_type key;
     for(j = 1; j < n; j++){
-        key = arr[j];
+        // d_type key = arr[j];
         i = j;
         while(i > 0 && arr[i-1] > arr[i]){
             arr_swap(arr, i-1, i);
@@ -586,7 +566,7 @@ static PyObject* pi(PyObject *self, PyObject *args){
 
 static PyObject* bubblesort(PyObject *self, PyObject *args){
     PyObject* seq;
-    int i, seqlen;
+    uint i, seqlen;
     d_type * dbar;
 
     if(!PyArg_ParseTuple(args, "O", &seq)){
@@ -963,11 +943,18 @@ static PyObject* makeArrZeros(PyObject *self, PyObject *args){
     d_type i, seqlen;
 
     if(!PyArg_ParseTuple(args, "l", &seqlen)){ return NULL; }
-    if(seqlen < 0){ return Py_BuildValue("O", PyList_New(0)); }
+    if(seqlen <= 0){ return Py_BuildValue("O", PyList_New(0)); }
 
     PyObject * seq = PyList_New(seqlen);
-
-    for(i = 0; i < seqlen; i++){ PyList_SetItem(seq, i, PyLong_FromLong(0)); }
+    
+    // for(i = 0; i < seqlen; i++){
+    //     PyList_SetItem(seq, i, PyLong_FromLong(0));
+    // }
+    
+    for(i = 0; i < (int)(seqlen/2.0) + 1; i++){
+        PyList_SetItem(seq, i, PyLong_FromLong(0));
+        PyList_SetItem(seq, (seqlen - 1) - i, PyLong_FromLong(0));
+    }
     
     return Py_BuildValue("O", seq);
 }
@@ -980,8 +967,34 @@ static PyObject* runChudnovsky(PyObject *self, PyObject *args){
     return Py_BuildValue("d", chudnovsky(n));
 }
 
+static PyObject* runWilson(PyObject *self, PyObject *args){
+    uint n;
+    
+    if(!PyArg_ParseTuple(args, "l", &n)){ return NULL; }
+    
+    uint a = wilson(n);
+    
+    return Py_BuildValue("l", a);
+}
+
+static PyObject* runIsPrimeWilson(PyObject *self, PyObject *args){
+    uint n;
+    
+    if(!PyArg_ParseTuple(args, "l", &n)){ return NULL; }
+    
+    return Py_BuildValue("l", isPrimeWilson(n));
+}
+
+static PyObject* runWillans(PyObject *self, PyObject *args){
+    d_type n;
+
+    if(!PyArg_ParseTuple(args, "l", &n)){ return NULL; }
+    
+    return Py_BuildValue("l", willans(n));
+}
+
 static PyObject* runAckermann(PyObject *self, PyObject *args){
-    unsigned long long m, n;
+    uint m, n;
 
     if(!PyArg_ParseTuple(args, "KK", &m, &n)){ return NULL; }
     
@@ -989,7 +1002,7 @@ static PyObject* runAckermann(PyObject *self, PyObject *args){
 }
 
 static PyObject* runAckermannLookup(PyObject *self, PyObject *args){
-    unsigned long long m, n;
+    uint m, n;
 
     if(!PyArg_ParseTuple(args, "KK", &m, &n)){ return NULL; }
     
@@ -1047,6 +1060,9 @@ static PyMethodDef arctan_methods[] = {
     { "Ackermann", runAckermann, METH_VARARGS, "Ackermann Function" },
     { "AckermannLookup", runAckermannLookup, METH_VARARGS, "Ackermann Function w/ Look Up Table" },
     { "Chudnovsky", runChudnovsky, METH_VARARGS, "Chudnovsky Algorithm" },
+    { "wilson", runWilson, METH_VARARGS, "Wilson Algorithm" },
+    { "isPrimeWilson", runIsPrimeWilson, METH_VARARGS, "Wilson Theorem" },
+    { "willans", runWillans, METH_VARARGS, "Willans Formula" },
     { NULL, NULL, 0, NULL }
 };
 
