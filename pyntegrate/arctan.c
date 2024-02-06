@@ -10,7 +10,7 @@
 #include <Python.h>
 
 double integrate(double (*f)(double), double a, double b);
-double integrate2(double (*f)(double), double a, double b, int n);
+double integrate2(double (*f)(double), double a, double b, unsigned long long n);
 
 // double f(double x){ return 1.0/(1.0 + x*x); }
 // double f2(double t){ return pow(t, 0 - 1) * pow(e, -t); }
@@ -36,23 +36,25 @@ int isSorted(d_type *arr, int n){
 }
 
 double integrate(double (*f)(double), double a, double b){
-    int n = 5000000;
+    return integrate2(f, a, b, 5000000);
 
-    double h = (b-a)/(double)n;
-    double s = (*f)(a) + (*f)(b);
+    // int n = 5000000;
 
-    int i;
-    for(i = 1; i < n; i+=2){ s = s + 4 * (*f)(a + i * h); }
-    for(i = 2; i < n-1; i+=2){ s = s + 2 * (*f)(a + i*h); }
+    // double h = (b-a)/(double)n;
+    // double s = (*f)(a) + (*f)(b);
 
-    return (s*h)/3.0;
+    // int i;
+    // for(i = 1; i < n; i+=2){ s = s + 4 * (*f)(a + i * h); }
+    // for(i = 2; i < n-1; i+=2){ s = s + 2 * (*f)(a + i*h); }
+
+    // return (s*h)/3.0;
 }
 
-double integrate2(double (*f)(double), double a, double b, int n){
+double integrate2(double (*f)(double), double a, double b, uint n){
     double h = (b-a)/(double)n;
     double s = (*f)(a) + (*f)(b);
 
-    int i;
+    uint i;
     for(i = 1; i < n; i+=2){ s = s + 4 * (*f)(a + i * h); }
     for(i = 2; i < n-1; i+=2){ s = s + 2 * (*f)(a + i*h); }
 
@@ -561,7 +563,7 @@ static PyObject* primes(PyObject *self, PyObject *args){
 }
 
 static PyObject* pi(PyObject *self, PyObject *args){
-    return Py_BuildValue("f", 4*integrate2(f, 0, 1, 100000000));
+    return Py_BuildValue("f", 4 * integrate2(f, 0, 1, 1000000000));
 }
 
 static PyObject* bubblesort(PyObject *self, PyObject *args){
@@ -934,7 +936,10 @@ static PyObject* makeArrSequential(PyObject *self, PyObject *args){
 
     PyObject * seq = PyList_New(seqlen);
 
-    for(i = 0; i < seqlen; i++){ PyList_SetItem(seq, i, PyLong_FromLong(i)); }
+    for(i = 0; i < (int)(seqlen/2.0); i++){
+        PyList_SetItem(seq, i, PyLong_FromLong(i));
+        PyList_SetItem(seq, (seqlen - 1) - i, PyLong_FromLong((seqlen - 1) - i));
+    }
     
     return Py_BuildValue("O", seq);
 }
