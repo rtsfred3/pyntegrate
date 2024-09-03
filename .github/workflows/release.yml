@@ -54,7 +54,7 @@ jobs:
               id: version
               run: echo "::set-output name=version::$(python3 setup.py --version)"
             - name: Downloading Artifacts
-              uses: actions/download-artifact@v3
+              uses: actions/download-artifact@v4.1.7
               with:
                   name: release-whl-artifacts
                   path: dist/
@@ -84,7 +84,7 @@ jobs:
         
         steps:
             - name: Downloading Artifacts
-              uses: actions/download-artifact@v3
+              uses: actions/download-artifact@v4.1.7
               with:
                   name: release-whl-artifacts
                   path: dist/
