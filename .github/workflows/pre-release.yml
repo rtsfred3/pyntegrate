@@ -37,7 +37,7 @@ jobs:
                 python3 -m build -s -w
                 # ./generate_whl.sh && python3 setup.py bdist_wheel --plat-name=win32 && python3 setup.py bdist_wheel --plat-name=win-amd64
             - name: Uploading Artifacts
-              uses: actions/upload-artifact@v3
+              uses: actions/upload-artifact@v4
               with:
                   name: pre-whl-artifacts
                   path: |
