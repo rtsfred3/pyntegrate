@@ -1,3 +1,5 @@
+import toml
+
 PyProjectDict = {
     'build-system': {
         "requires": [ "flit_core >= 3.12.0, <4", "wheel" ],
@@ -25,10 +27,9 @@ PyProjectDict = {
             "Repository": "https://github.com/rtsfred3/pyntegrate.git",
             "Bug Tracker": "https://github.com/rtsfred3/pyntegrate/issues"
         }
-    },
-    # 'project.urls': {
-    #     "Homepage": "https://github.com/rtsfred3/pyntegrate",
-    #     "Repository": "https://github.com/rtsfred3/pyntegrate.git",
-    #     "Bug Tracker": "https://github.com/rtsfred3/pyntegrate/issues"
-    # }
+    }
 }
+
+def dumpDict():
+    with open('config.toml', 'w') as f:
+        toml.dump(PyProjectDict, f)

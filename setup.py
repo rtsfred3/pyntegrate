@@ -1,10 +1,6 @@
 import setuptools
-import toml
 import pyntegrate.__version__ as __version__
 import pyntegrate.PyProjectDict as PyProjectDict
-
-with open('config.toml', 'w') as f:
-    toml.dump(PyProjectDict.PyProjectDict, f)
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
