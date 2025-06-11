@@ -2,27 +2,24 @@
 #     import tomllib
 # except:
 #     import tomli as tomllib
-import configparser
-import tomli as tomllib
 
-config = configparser.ConfigParser()
-config.read('pyproject.toml')
-print(config.sections())
+import pyntegrate.PyProjectDict as PyProjectDict
+import tomllib
 
 with open("pyproject.toml", "rb") as f:
     data = tomllib.load(f)
 
-__title__ = data['project']['name']
-__description__ = data['project']['description']
+__title__ = PyProjectDict.PyProjectDict['project']['name']
+__version__ = PyProjectDict.PyProjectDict['project']['version']
+__description__ = PyProjectDict.PyProjectDict['project']['description']
 __url__ = data['project']['urls']["Homepage"]
 __download_url__ = data['project']['urls']["Homepage"]
-__version__ = data['project']['version']
-__author__ = data['project']['authors'][0]['name']
-__author_email__ = data['project']['authors'][0]['email']
+__author__ = PyProjectDict.PyProjectDict['project']['authors'][0]['name']
+__author_email__ = PyProjectDict.PyProjectDict['project']['authors'][0]['email']
 __project_urls__ = {
     'Bug Tracker': data['project']['urls']["Bug Tracker"],
     'Source Code': data['project']['urls']["Repository"],
 }
-__classifiers__ = data['project']['classifiers']
-__keywords__ = ' '.join(data['project']['keywords'])
-__license__ = data['project']['license']
+__classifiers__ = PyProjectDict.PyProjectDict['project']['classifiers']
+__keywords__ = ' '.join(PyProjectDict.PyProjectDict['project']['keywords'])
+__license__ = PyProjectDict.PyProjectDict['project']['license']

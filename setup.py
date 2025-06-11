@@ -1,5 +1,10 @@
 import setuptools
+import toml
 import pyntegrate.__version__ as __version__
+import pyntegrate.PyProjectDict as PyProjectDict
+
+with open('config.toml', 'w') as f:
+    toml.dump(PyProjectDict.PyProjectDict, f)
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
@@ -17,7 +22,7 @@ setuptools.setup(
     project_urls=__version__.__project_urls__,
     classifiers=__version__.__classifiers__,
     keywords=__version__.__keywords__,
-    scripts=['pyntegrate/pyarctan.py', 'pyntegrate/ListLINQ.py'],
+    scripts=['pyntegrate/pyarctan.py', 'pyntegrate/ListLINQ.py', 'pyntegrate/PyProjectDict.py'],
     packages=setuptools.find_packages(),
     ext_modules=[setuptools.Extension("pyntegrate.arctan", ["pyntegrate/arctan.c"])],
     python_requires=">=3.7",
