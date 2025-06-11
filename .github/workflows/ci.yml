@@ -9,10 +9,12 @@ on:
 
 jobs:
     test:
+        # if: false
         strategy:
             matrix:
                 python-version: [ '3.9', '3.10', '3.10', '3.12' ]
-                platform: [ ubuntu-latest ]
+                platform: [ macos-latest ]
+                # platform: [ ubuntu-latest ]
                 # platform: [ ubuntu-latest, macos-latest ]
                 # platform: [ubuntu-latest, macos-latest, windows-latest]
         
