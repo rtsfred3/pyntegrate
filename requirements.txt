@@ -1,5 +1,5 @@
 pytest==6.2.1
-tomli=2.2.1
+tomli==2.2.1
 flit
 build
 wheel
