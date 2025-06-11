@@ -1,7 +1,13 @@
-try:
-    import tomllib
-except:
-    import tomli as tomllib
+# try:
+#     import tomllib
+# except:
+#     import tomli as tomllib
+import configparser
+import tomli as tomllib
+
+config = configparser.ConfigParser()
+config.read('pyproject.toml')
+print(config.sections())
 
 with open("pyproject.toml", "rb") as f:
     data = tomllib.load(f)
