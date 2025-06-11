@@ -9,16 +9,16 @@ PyProjectDict = {
         "name": "pyntegrate",
         "version": "1.3.7.dev11",
         "description": "Pyntegrate is an example of various sorting algorithms and other functions using C Extensions.",
+        "readme": { "file": "README.md", "content-type": "text/markdown" },
         "authors": [
-            { "name": "Ryan Fredrickson", "email": "rtsfred3+pyntegrate@gmail.com" },
-            { "name": "User 2", "email": "test@gmail.com" },
+            { "name": "Ryan Fredrickson", "email": "rtsfred3+pyntegrate@gmail.com" }
         ],
-        "keywords": ['pyntegrate', 'Python', 'C', 'CPython'],
+        "keywords": [ 'pyntegrate', 'Python', 'C', 'CPython' ],
         "classifiers": [
             "Programming Language :: Python :: 3",
             "Programming Language :: Python :: Implementation :: CPython",
             "Programming Language :: C",
-            "Operating System :: OS Independent",
+            "Operating System :: OS Independent"
         ],
         "license": "Apache-2.0",
         "requires-python": ">=3.9",
@@ -30,6 +30,11 @@ PyProjectDict = {
     }
 }
 
-def dumpDict():
-    with open('config.toml', 'w') as f:
+def dump():
+    with open('pyproject.toml', 'w') as f:
         toml.dump(PyProjectDict, f)
+
+# try:
+#     dump()
+# except:
+#     pass
