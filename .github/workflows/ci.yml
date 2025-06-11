@@ -14,11 +14,17 @@ jobs:
             matrix:
                 python-version: [ '3.11', '3.12' ]
                 # platform: [ ubuntu-latest ]
-                platform: [ macos-latest ]
+
+                setting:
+                    - platform: 'macos-latest'
+                      args: '--target universal-apple-darwin'
+                    - platform: 'ubuntu-22.04'
+                      args: ''
+
                 # platform: [ ubuntu-latest, macos-latest ]
                 # platform: [ubuntu-latest, macos-latest, windows-latest]
         
-        runs-on: ${{ matrix.platform }}
+        runs-on: ${{ matrix.setting.platform }}
         
         steps:
             - uses: actions/checkout@v2
