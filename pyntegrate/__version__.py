@@ -1,4 +1,7 @@
-import tomllib
+try:
+    import tomllib
+except:
+    import tomli as tomllib
 
 with open("pyproject.toml", "rb") as f:
     data = tomllib.load(f)
