@@ -21,7 +21,7 @@ PyProjectDict = {
             "Operating System :: OS Independent"
         ],
         "license": "Apache-2.0",
-        "requires-python": ">=3.9",
+        "requires-python": ">=3.7",
         "urls": {
             "Homepage": "https://github.com/rtsfred3/pyntegrate",
             "Repository": "https://github.com/rtsfred3/pyntegrate.git",

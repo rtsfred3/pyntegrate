@@ -8,12 +8,12 @@ on:
 
 jobs:
     generate-test-release:
-        if: false
+        # if: false
         name: "Generating Test Release"
     
         strategy:
             matrix:
-                python-version: [ '3.9', '3.10', '3.10', '3.11', '3.12' ]
+                python-version: [ '3.7', '3.8', '3.9', '3.10', '3.11', '3.12' ]
                 platform: [ macos-latest, ubuntu-latest, windows-latest ]
                 # platform: [ubuntu-latest, macos-latest, windows-latest]
         
@@ -52,7 +52,7 @@ jobs:
     
         strategy:
             matrix:
-                python-version: [ '3.9', '3.10', '3.10', '3.11', '3.12' ]
+                python-version: [ '3.9', '3.10', '3.11', '3.12' ]
                 platform: [ macos-latest, ubuntu-latest ]
                 
         runs-on: ${{ matrix.platform }}
