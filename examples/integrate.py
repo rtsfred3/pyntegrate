@@ -2,6 +2,7 @@ import re, sys, time, random
 # import arctan, pyntegrate.pyarctan
 from pyntegrate import *
 import pyntegrate.pyarctan as pyarctan
+import pyntegrate.arctan as arctan
 
 from help import *
 
@@ -886,9 +887,23 @@ if __name__== "__main__":
     
     # print(arctan.Chudnovsky(2))
     # print(arctan.Chudnovsky(3))
+
+    arrLength = 1000000
+
+    start = time.time()
+    CSequentialArr = arctan.makeArrSequential(arrLength)
+    end = time.time()
+    print(end - start)
+
+    start = time.time()
+    CSequentialArr = pyarctan.makeArrSequential(arrLength)
+    end = time.time()
+    print(end - start)
+
+    # print()
     
-    print(3.1415926535897932384626433832795028841971693993751058209749445923)
-    print(arctan.pi())
+    # print(3.1415926535897932384626433832795028841971693993751058209749445923)
+    # print(arctan.pi())
     
     # in1 = int(sys.argv[1])
     # in2 = int(sys.argv[2])

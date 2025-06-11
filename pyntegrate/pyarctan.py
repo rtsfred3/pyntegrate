@@ -1,6 +1,8 @@
 import threading
 from typing import List
 
+import pyntegrate.__version__
+
 class ThreadWithReturnValue(threading.Thread):
     def __init__(self, group=None, target=None, name=None, args=(), kwargs={}, Verbose=None):
         threading.Thread.__init__(self, group, target, name, args, kwargs)
@@ -20,6 +22,12 @@ class arg_struct:
         self.arg1 = arg1
         self.arg2 = arg2
         self.depth = depth
+
+def makeArrSequential(n: int) -> List[int]:
+    return [i for i in range(n)]
+
+def makeArrZeros(n: int) -> List[int]:
+    return [0 for i in range(n)]
 
 def isPrime(n) -> bool:
     if (n <= 1) or (n % 2 == 0 and n != 2) or (n % 3 == 0 and n != 3) or (n % 5 == 0 and n != 5) or (n % 7 == 0 and n != 7):

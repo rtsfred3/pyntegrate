@@ -1,20 +1,19 @@
-__title__ = 'pyntegrate'
-__description__ = 'Pyntegrate is an example of various sorting algorithms and other functions using C Extensions.'
-__url__ = 'https://github.com/rtsfred3/pyntegrate'
-__download_url__ = 'https://pypi.org/project/pyntegrate/'
-__version__ = '1.3.7.dev10'
-__author__ = 'Ryan Fredrickson'
-__author_email__ = 'rtsfred3@gmail.com'
+import tomllib
+
+with open("pyproject.toml", "rb") as f:
+    data = tomllib.load(f)
+
+__title__ = data['project']['name']
+__description__ = data['project']['description']
+__url__ = data['project']['urls']["Homepage"]
+__download_url__ = data['project']['urls']["Homepage"]
+__version__ = data['project']['version']
+__author__ = data['project']['authors'][0]['name']
+__author_email__ = data['project']['authors'][0]['email']
 __project_urls__ = {
-    'Bug Tracker': 'https://github.com/rtsfred3/pyntegrate/issues',
-    'Source Code': 'https://github.com/rtsfred3/pyntegrate',
+    'Bug Tracker': data['project']['urls']["Bug Tracker"],
+    'Source Code': data['project']['urls']["Repository"],
 }
-__classifiers__ = [
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: Implementation :: CPython",
-    "Programming Language :: C",
-    "License :: OSI Approved :: Apache Software License",
-    "Operating System :: OS Independent",
-]
-__keywords__ = 'pyntegrate Python C CPython'
-__license__ = 'Apache 2.0'
+__classifiers__ = data['project']['classifiers']
+__keywords__ = ' '.join(data['project']['keywords'])
+__license__ = data['project']['license']
